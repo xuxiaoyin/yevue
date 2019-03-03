@@ -3,7 +3,7 @@
     <div id="content">
         <div class="router">
           <div class="container">
-                <router-link to="/">首页</router-link>><a href="javascript:void(0)">商城</a>
+                <router-link to="/">首页</router-link>><a href="javascript:void(0)">品牌商城</a>
           </div>
         </div>
         <div class="container">

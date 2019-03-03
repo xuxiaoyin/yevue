@@ -2,9 +2,9 @@
 	<div>
         <div id="content">
             <div class="router">
-                <div class="container">
+                <div class="container" style="margin-top:20px;">
                     <!-- <a href="###">首页</a>><a href="###">登录</a> -->
-                    <router-link to="/">首页</router-link>><a href="javascript:void(0)">商品详情</a>
+                    <router-link to="/">首页</router-link>><a href="javascript:void(0)">商品详情</a>>{{info.goods_name}}
                 </div>
             </div>
             
@@ -19,16 +19,16 @@
                         <div id="box"></div>
                         <div class="pro_list">
                             <ul>
-                                <li v-for="(item,index) in info.gallery"><img :src="item"></li>
+                                <li v-for="(item,index) in info.gallery" :key="index"><img :src="item"></li>
                              </ul>
                         </div>
                         <a class="prev"></a>
                         <a class="next"></a>
                     </div>
                     <div class="middle_top_right">
-                            <div class="right_top">
+                            <!-- <div class="right_top" v-if="guanggaowei.ad_code">
                                 <img :src="guanggaowei.ad_code"/>
-                            </div>
+                            </div> -->
                             <div class="title">{{info.goods_name}}</div>
                             <div class="price">价格：<span>￥{{info.shop_price}}/件</span> </div>
                             
@@ -69,7 +69,7 @@
                     <div class="chat_title">
                         商品详情
                     </div>
-                    <div class="table2">
+                    <div class="table2 left-red">
                         <ul>
                             <li>品名</li>
                             <li>{{info.goods_name}}</li>
@@ -137,7 +137,7 @@
                     </div>
                     <div class="eva_list">
                         <ul>
-                            <li v-for="(item,index) in eva_list">
+                            <li v-for="(item,index) in eva_list" :key="index">
                                 <div class="user_img"><img :src="item.headimgurl"/><p>{{item.user_name}}</p></div>
                                 <div class="right">
                                     <!-- <div class="eva_title">
@@ -180,7 +180,7 @@
             <div class="swiper-container">
                 <swiper :options="swiperOption" ref="mySwiper">
                   <!-- slides -->
-                  <swiper-slide v-for="(item,index) in info.gallery"><img :src="item"></swiper-slide>
+                  <swiper-slide v-for="(item,index) in info.gallery" :key="index"><img :src="item"></swiper-slide>
                  
                   <!-- Optional controls -->
                   <div class="swiper-pagination" slot="pagination"></div>
@@ -254,7 +254,7 @@
             <div class="eva_list-m">
                 <div class="container-m">
                     <ul>
-                        <li v-for="(item,index) in eva_list">
+                        <li v-for="(item,index) in eva_list" :key="index">
                             <div class="img"><img :src="item.headimgurl"></div>
                             <div class="name">{{item.user_name}}</div>
                             <div class="time">{{item.add_time}}</div>
@@ -288,7 +288,8 @@
 				// value3:0,
 				content:'',
 				eva_list:[],
-				num:1,
+                num:1,
+                guanggaowei:[],
                 swiperOption: {
                     autoplay: 3000,
                     pagination: {
@@ -996,6 +997,8 @@
         overflow: hidden;
         margin: 30px auto;
         border: 1px #e0e0e0 solid;
+        text-align: center;
+        color: red;
         
         ul{
            
@@ -1010,6 +1013,10 @@
                     width: 20%;
                     padding: 0 20px;
                     box-sizing: border-box;
+                    text-align: center;
+                    color: red;
+                    font-size: 14px;
+                    font-weight: bold;
                 }
                 
                 
@@ -1019,7 +1026,9 @@
                 
                 text-align:  left;
                 line-height:40px; 
-                color:#666666; 
+                color:#000; 
+                font-size: 14px;
+                font-weight: 800;
                 box-sizing: border-box;
                  &:last-child{
                     border-right: none;

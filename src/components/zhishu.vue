@@ -123,6 +123,8 @@
                 zhishu:[],
                 zhishu_tab:['所有指数','当年茶指数','新茶指数','中茶指数'],
                 zhishutab_num:0,
+                brand:['',11,13,14],
+                brand_index:0,
                 menuList: [
                   {
                       txt: '↑默认',
@@ -165,7 +167,7 @@
             click_zhishutab(index){
               this.zhishutab_num = index;
               var that = this;
-              axios.post(that.GLOBAL.url+'pcindex.php?Action=chayezhishu&shuzi='+index)
+              axios.post(that.GLOBAL.url+`pcindex.php?Action=chayezhishu&shuzi=${index}&brand_id=${this.brand_index}`)
               .then((res) =>{
                 console.log(res);
                 this.zhishu = res.data
@@ -188,12 +190,14 @@
                 this.band_list.map((e)=>{
                     e.selected = 0
                 })
+                this.zhishutab_num=0
+                 this.brand_index=this.brand[index]
                  this.band_list[index].selected = 1;
                  this.$axios({
-                    url:'http://cy.gzziyu.com/mobile/pcindex.php?Action=chayezhishu',
+                    url:'http://cy.gzziyu.com/mobile/pcindex.php?Action=chayezhishu&shuzi=0',
                     method:'post',
                     params:{
-                        shuzi:index
+                        brand_id:this.brand_index        
                     }
                  })
                  .then((res)=>{
@@ -213,7 +217,7 @@
             },
             // 指数列表
 		    getzhishuList(){
-		      var that = this;
+              var that = this;
 		      axios.post(that.GLOBAL.url+'pcindex.php?Action=chayezhishu&shuzi=0')
 		      .then((res) =>{
 		        console.log(res);

@@ -15,7 +15,7 @@
 								<div class="phone">手机号码：{{item.mobile}}</div>
 								<div class="phone">微信号：{{item.wechat}}</div>
 								<div class="phone">
-									服务品牌：{{item.author}}
+									服务品牌：{{item.author_email}}
 								</div>
 							</a>
 						</li>

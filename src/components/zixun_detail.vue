@@ -1,13 +1,13 @@
 <template>
 	<div id="content">
 		<div class="router">
-			<div class="container">
+			<div class="container localtion">
 				<router-link to="/">首页</router-link>><router-link to="/zixun">资讯频道</router-link>><a href="javascript:void(0)">{{info.title}}</a>			</div>
 		</div>
 		<div class="detail">
-			<div class="container">
+			<div class="container container1">
 				<div class="title">{{info.title}}</div>
-				<div class="beizhu"><span>来源：求是网</span><span>作者：{{info.author}}</span><span>阅读：{{info.is_open}}</span><span>发布时间：{{info.add_time}}</span>
+				<div class="beizhu"><span>来源：{{info.author}}</span><span>作者：{{info.author}}</span><span>阅读：{{info.is_open}}</span><span>发布时间：{{info.add_time}}</span>
 					<!-- <span><img src="static/img/fenxiang.png"/>分享到</span> -->
 
 				</div>
@@ -95,10 +95,20 @@
 	}
 </script>
 <style lang="scss">
-	
+	.localtion{
+        width: 1000px;
+        margin: 20px auto;
+    }
 	.detail{
     width: 100%;
     border-bottom: 1px #d6d6d6 solid;
+        .container1{
+            width: 1000px;
+            line-height: 1.5;
+        }
+            img{
+                max-width: 100%;
+            }
     .title{
         font-size: 30px;
         font-weight: bold;

@@ -4,14 +4,14 @@
 			<div class="router">
 				<div class="container">
 					<!-- <a href="###">首页</a>><a href="###">登录</a> -->
-					<router-link to="/">首页</router-link>><a href="javascript:void(0)">行情详情</a>
+					<router-link to="/">首页</router-link>><a href="javascript:void(0)">行情参考</a>><a href="javascript:void(0)">{{info.brand_name}}</a>><a href="javascript:void(0)">{{info.goods_name}}</a>
 				</div>
 			</div>
 			
 			<div class="container">
 				<!--主体上部分-->
 				<div class="middle_top clear">
-					<div class="middle_top_left">
+					<!-- <div class="middle_top_left">
 						<div id="smll_box">
 							<img :src="info.gallery[0]"/>
 							<div id="box1"></div>
@@ -19,18 +19,25 @@
 						<div id="box"></div>
 						<div class="pro_list">
 							 <ul>
-							 	<li v-for="(item,index) in info.gallery"><img :src="item"></li>
+							 	<li v-for="(item,index) in info.gallery" :key="index+info.goods_id"><img :src="item"></li>
 							 </ul>
 						</div>
 						<a class="prev"></a>
 						<a class="next"></a>
-					</div>
+					</div> -->
+                    <div class="middle_top_left">
+                        <ProductZoomer
+                        :base-images="images"
+                        :base-zoomer-options="zoomerOptions"
+                        />
+                    </div>
+
 					<div class="middle_top_right">
-							<div class="right_top">
+							<div class="right_top" v-if="guanggaowei&&guanggaowei.ad_code">
 								<img :src="guanggaowei.ad_code"/>
 							</div>
 							<div class="title">{{info.goods_name}}<span></span></div>
-							<div class="price">价格：<span>￥{{info.shop_price}}/件</span><small>(期货价：更新于{{info.start_time}})</small> </div>
+							<div class="price">价格：<span>￥{{info.shop_price}}/件</span><small>(期货价：￥{{info.market_price}}更新于{{info.start_time}})</small> </div>
 							
 							
 							
@@ -110,8 +117,10 @@
 								<div class="btns"><router-link to="/qiugou">发布出售</router-link></div>
 								<div class="btns"><router-link to="/qiugou">发布求购</router-link></div>
 								<div class="btns">存茶评估</div>
-								<!-- <a href="###"><img src="static/img/xin.png"/>加关注</a>
-								<a href="###"><img src="static/img/fenxiang.png"/>分享到</a> -->
+								<a href="###" style="margin-right:20px;" @click="guanzhu(info.id)"><img :src="isGz?'static/img/xin.png':'static/img/xin-normal.png'"/> {{gztext}}</a>
+								<a href="###"><img src="static/img/fenxiang.png"/> 分享到
+    <share :config="config" class="share"></share></a>
+                                
 							</div>
 					</div>
 				</div>
@@ -122,12 +131,12 @@
 					</div>
 					<div class="cat_list">
 						<ul>
-							<li v-for="(item,index) in cankao_tab" @click="change_cankao_tab(index)" :class="tab_index==index?'active':''">{{item}}</li>
+							<li v-for="(item,index) in cankao_tab"  @click="change_cankao_tab(index)" :class="tab_index==index?'active':''">{{item}}</li>
 						</ul>
 					</div>
 					<div class="chat_name">
-						<p>1801 云期-参考价</p>
-						<span>数据来源：puerpinpai.com 更新时间：2018-04-20</span>
+						<p>{{info.goods_name}}-参考价</p>
+						<span>数据来源：puerpinpai.com 更新时间：{{info.zygengxinshijian}}</span>
 					</div>
 					<canvas id="line" width="1110" height="300"></canvas>
 					
@@ -156,7 +165,7 @@
 							<li>日均涨跌额</li>
 							<li>日均涨跌幅</li>
 						</ul>
-						<ul v-for="(item,index) in shijian">
+						<ul v-for="(item,index) in shijian" >
 							<li>{{item.h_jiezhisj}}</li>
 							<li>￥{{item.h_cenkao}}</li>
 							<li class="red">降￥{{item.h_zhangdiee}}</li>
@@ -290,7 +299,7 @@
 					</div>
 					<div class="eva_list">
 						<ul>
-							<li v-for="(item,index) in eva_list">
+							<li v-for="(item,index) in eva_list" >
 								<div class="user_img"><img :src="item.headimgurl"/><p>{{item.user_name}}</p></div>
 								<div class="right">
 									<div class="eva_title">
@@ -539,7 +548,8 @@
 
 <script>
 	var echarts = require('echarts');
-	import { swiper, swiperSlide } from 'vue-awesome-swiper'
+    import { swiper, swiperSlide } from 'vue-awesome-swiper'
+    import GitHubBadge from 'vue-github-badge'
 	export default {
 		name:'hangqing',
 		data(){
@@ -564,7 +574,8 @@
 				value2:0,
 				value3:0,
 				content:'',
-				eva_list:[],
+                eva_list:[],
+                isGz:false,
 				num:1,
 				guanggaowei:'',
 				pickerOptions2: {
@@ -595,12 +606,43 @@
 		          }]
 		        },
 		        value4: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
-		        value5:  ["2016-12-06", "2019-01-25"]
-			}
-		},
+                value5:  ["2016-12-06", "2019-01-25"],
+                'zoomerOptions': {
+                    'zoomFactor': 3,
+                    'pane': 'pane',
+                    'hoverDelay': 300,
+                    'namespace': 'zoomer',
+                    'move_by_click':false,
+                    'scroll_items': 2,
+                    'choosed_thumb_border_color': "#dd2c00"
+                },
+                'images': {
+                    'thumbs':[],
+                    'normal_size':[],
+                    'large_size':[]
+                },
+            config:{
+                // url                 : '', // 网址，默认使用 window.location.href
+                // source              : '', // 来源（QQ空间会用到）, 默认读取head标签：<meta name="site" content="http://overtrue" />
+                // title               : '', // 标题，默认读取 document.title 或者 <meta name="title" content="share.js" />
+                // description         : '', // 描述, 默认读取head标签：<meta name="description" content="PHP弱类型的实现原理分析" />
+                // image               : '', // 图片, 默认取网页中第一个img标签
+                // sites               : ['qzone', 'qq', 'weibo','wechat', 'douban'], // 启用的站点
+                // disabled            : ['google', 'facebook', 'twitter'], // 禁用的站点
+                // wechatQrcodeTitle   : '微信扫一扫：分享', // 微信二维码提示文字
+                // wechatQrcodeHelper  : '<p>微信里点“发现”，扫一下</p><p>二维码便可将本文分享至朋友圈。</p>'
+            }
+		}
+        },
+        computed: {
+            gztext() {
+                return this.isGz?'取消关注':'加关注'
+            }
+        },
 		 components: {
 	      swiper,
-	      swiperSlide
+          swiperSlide,
+          'github-badge': GitHubBadge
 	     },
 		created(){
 			this.get_info(this.$route.query.id)
@@ -611,9 +653,9 @@
 	
 		},
 		mounted(){
-			this.echarts()
-			console.log("info")
-			console.log(this.info)
+            this.echarts()
+            this.get_info(this.$route.query.id)
+			//console.log(this.info)
 			
 		
 		},
@@ -635,6 +677,10 @@
 	        }
 	    },
 		methods:{
+            //关注
+            guanzhu(info_id){
+                this.isGz=!this.isGz
+            },
 			// 广告
 			guanggao(){
 				console.log('guanggao')
@@ -878,6 +924,21 @@
                     
                     this.info = res.data
                     let angle = this.info.zonghe/100;
+                    let _img=res.data.gallery;
+                    this.zoomerOptions.scroll_items=_img.length
+                     for(var i=0; i<_img.length;i++){
+                         var _obj={
+                             'id': i,
+                              'url':_img[i]  
+                         }
+                        this.images.thumbs.push(_obj)
+                        this.images.normal_size.push(_obj)
+                        this.images.large_size.push(_obj)
+                     }
+                    
+                    console.log('img')
+                    console.info(this.images);
+                    
 					console.log(angle)
 					this.drawCircle({
 					    id: 'canvas',
@@ -916,13 +977,15 @@
 	height:auto;
 	overflow:hidden;
 }
-
+    
+    .middle_top{
+        overflow: hidden;
+        position: relative;
+    }
 
   .middle_top .middle_top_left{
     float: left;
-    position: relative;
-    width: 500px;
-    height: 610px;
+    width: 300px;
     margin-right: 50px;
 }
   .middle_top .middle_top_left #smll_box{
@@ -931,6 +994,7 @@
         width: 500px;
         height: 500px;
 }
+
 .swiper-slide{
 	img{
 		width:100%;
@@ -1090,10 +1154,14 @@
     }
     .btn_list_button{
         width: 650px;
-        height: 45px;
+        height: 100px;
         font-size: 14px;
         color: #666666;
          line-height:30px;
+         .share{
+             margin-top:10px;
+             margin-left: 100px;
+         }
         .btns{
         	a{
         		color: #fff;
@@ -1458,6 +1526,10 @@
                     width: 20%;
                     padding: 0 20px;
                     box-sizing: border-box;
+                    text-align: center;
+                    font-size: 14px;
+                    color: red;
+                    font-weight: bold;
                 }
                 
                 
@@ -1467,7 +1539,9 @@
                 
                 text-align:  left;
                 line-height:40px; 
-                color:#666666; 
+                color:#000; 
+                font-size: 14px;
+                font-weight: bold;
                 box-sizing: border-box;
                  &:last-child{
                     border-right: none;

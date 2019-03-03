@@ -1,11 +1,11 @@
 <template>
 	<div id="content">
 		<div class="router">
-			<div class="container">
+			<div class="container location page">
 				<router-link to="/">首页</router-link>><router-link to="/tuan">品牌团队</router-link>><a href="javascript:void(0)">{{info.title}}</a>
 			</div>
 		</div>
-		<div class="container">
+		<div class="container page">
 			<div class="detail">
 			
 				<div class="img">
@@ -13,8 +13,10 @@
 				</div>
 				<div class="detail_info">
 					<p class="name">{{info.title}}</p>
-					<p class="phone">手机号码：{{info.mobile}}      微信号：{{info.wechat}}      服务品牌：{{info.comment_rank}}</p>
-					<div class="contant">
+					<p class="phone">手机号码：{{info.mobile}}</p>
+					<p class="phone">微信号：{{info.wechat}}</p>
+                    <p class="phone">服务品牌：{{info.author_email}}</p>
+                    <div class="contant">
 						<h4 class="contant_title">经纪人简介：</h4>
 						<div v-html="info.content"></div>
 					</div>
@@ -92,9 +94,16 @@
 
 
 <style lang="scss">
+    .page{
+        width: 1000px;
+        margin: 0 auto;
+    }
+    .location{
+        margin:20px auto;
+    }
 	.detail{
     width: 100%;
-    height: 405px;
+    min-height: 405px;
     margin: 0 0 65px 0;
     border-bottom: 1px #f2f2f2 solid;
     .img{
@@ -110,7 +119,7 @@
     }
     .detail_info{
         float: left;
-        width: 900px;
+        width: 700px;
         margin-left: 22px;
         .name{
             color: #000000;
@@ -118,9 +127,6 @@
            font-weight: bold;
            line-height: 40px;
               
-        }
-        p.phone{
-            
         }
         .contant{
             height: 204px;

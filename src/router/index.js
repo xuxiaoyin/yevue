@@ -111,7 +111,7 @@ export default new Router({
     {
       path:'/zixun',
       name:'zixun',
-      component:zixun
+      component:zixun,
     },
      {
       path:'/order_detail',

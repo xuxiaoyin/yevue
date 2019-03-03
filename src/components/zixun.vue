@@ -87,11 +87,12 @@
 		data(){
 			return {
 				zixun_list:[],
-                data_info:{}
+                data_info:{},
+                id:12
 			}
-		},
+        },
 		created(){
-			this.get_list(1)
+            this.get_list(1,this.id)
 		},
 		methods:{
              handleSizeChange(val) {
@@ -102,13 +103,13 @@
                 console.log(`当前页: ${val}`);
                 this.get_list(val)
             },
-			get_list(page){
+			get_list(page,id){
 				var that = this;
 			      this.$axios({
 			      	method:'post',
 			      	url:"http://cy.gzziyu.com/mobile/pcindex.php?Action=article_cat",
 			      	params:{
-			      		id:12,
+			      		id:id,
                         page:page
 			      	}
 
@@ -125,7 +126,7 @@
                     method:'post',
                     url:"http://cy.gzziyu.com/mobile/ziyu.php?id=&Action=xwyemian",
                     params:{
-                        id:12,
+                        id:id,
                         page:page
                     }
 
@@ -143,7 +144,17 @@
 			go_detail(id){
 				this.$router.push({ name: 'zixun_detail', query: {id:id }})
 			}
-		}
+		},
+		watch: {
+          $route(to){
+            if(this.$route.query.id){
+                this.id=this.$route.query.id
+             }else{
+             	this.id=12
+             }
+           this.get_list(1,this.id)
+          }
+        },
 	}
 </script>
 

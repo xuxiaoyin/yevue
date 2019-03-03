@@ -7,7 +7,7 @@
                 </div>
             </div>
             <!--弹出层-->
-            <div class="model" v-if="form_status">
+            <div class="model" v-if="form_status" style="height: 600px; margin:-300px 0 0 -300px;">
                 <div class="title">
                     发布求购
                 </div>
@@ -90,7 +90,7 @@
                         <div class="label">专家：</div>
                         <div class="select_div">
                             <select v-model="zuanjia">
-                                <option :value="item.id" v-for="(item,index) in tuan">{{item.title}}</option>
+                                <option :value="item.id" v-for="(item,index) in tuan">{{item.title}} &nbsp;&nbsp;服务品牌：{{item.author_email}}</option>
                             </select>
                         </div>
                     </div>

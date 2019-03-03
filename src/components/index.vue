@@ -6,7 +6,7 @@
         <div class="banner">
             <swiper :options="swiperOption" ref="mySwiper">
               <!-- slides -->
-              <swiper-slide v-for="(item,index) in listImg"><img :src="item.ad_code"></swiper-slide>
+              <swiper-slide v-for="(item,index) in listImg" :key="index"><img :src="item.ad_code"></swiper-slide>
              
               <!-- Optional controls -->
               <div class="swiper-pagination" slot="pagination"></div>
@@ -27,9 +27,9 @@
               <router-link to="/zhishu">查看更多>></router-link>
               <div class="ca_list">
                 <ul>
-                  <li :class="zhishu_index== 0?'active':''" @click="change_band(0)">大益指数</li>
-                  <li :class="zhishu_index== 1?'active':''" @click="change_band(1)">陈升号指数</li>
-                  <li :class="zhishu_index== 2?'active':''" @click="change_band(2)">中茶指数</li>
+                  <li :class="brand_index== 11?'active':''" @click="change_band(11)">大益指数</li>
+                  <li :class="brand_index== 13?'active':''" @click="change_band(13)">陈升号指数</li>
+                  <li :class="brand_index== 14?'active':''" @click="change_band(14)">中茶指数</li>
                 </ul>
               </div>
             </div>
@@ -37,6 +37,7 @@
               <ul>
                 <li 
                   v-for="(item,index) in zhishu_tab"
+                  :key="index"
                   @click="click_zhishutab(index)"
                   :data-index="index"
                   :class="index==zhishutab_num?'active':''">{{item}}</li>
@@ -56,7 +57,7 @@
                 <div class="tbody" style="height:640px;overflow:hidden;">
                     <swiper :options="swiperOption2" ref="mySwiper" style="height:640px;overflow:hidden;">
                       <!-- slides -->
-                      <swiper-slide v-for="(item,index) in zhishu" @click="go_hangqing(item.id)">
+                      <swiper-slide v-for="(item,index) in zhishu" :key="index" @click="go_hangqing(item.id)">
                         <div class="tr" @click="go_zhishu(item.id)">
                             <div class="td">{{item.h_chanpingm}}</div>
                             <div class="td">{{item.h_cenkao}}</div>
@@ -92,7 +93,7 @@
             <div class="flash_sale_show clear">
               <swiper :options="swiperOption1" ref="mySwiper">
                 <!-- slides -->
-                <swiper-slide v-for="(item,index) in hangqing" class="">
+                <swiper-slide v-for="(item,index) in hangqing" :key="index">
                     <a href="javascript:void(0)" class="img" @click="go_hangqing(item.id)" ><img :src="item.goods_img"></a>
                     <div class="introduce">
                         <h4 class="name"><a href="javascript:void(0)" >{{item.goods_name}}</a></h4>
@@ -144,7 +145,7 @@
                         </div>
                     </div>
                     <ul>
-                        <li v-for="(item,index) in pifa_right">
+                        <li v-for="(item,index) in pifa_right" :key="index">
                             <a href="javascript:void(0)" @click="go_shop_detail(item.id)">
                                 <div class="img">
                                     <img :src="item.goods_img"/>
@@ -172,13 +173,13 @@
                 </div>
                 <div class="tuan_list">
                     <ul>
-                        <li v-for="(item,index) in pinpai">
+                        <li v-for="(item,index) in pinpai" :key="index">
                             <a href="javascript:void(0);" @click="go_tuandui(item.id)">
                                 <img :src="item.file_url"/>
                                 <div class="name">{{item.title}}</div>
                                 <div class="phone">手机号码：{{item.mobile}}</div>
                                 <div class="phone">微信号：{{item.wechat}}</div>
-                                <div class="phone">服务品牌：{{item.author}}</div>
+                                <div class="phone">服务品牌：{{item.author_email}}</div>
                             </a>
                         </li>
                        
@@ -200,7 +201,7 @@
                 </div>
                 <div class="zixun_list">
                     <ul>
-                        <li v-for="(item,index) in zixun">
+                        <li v-for="(item,index) in zixun" :key="index">
                             <a href="javascript:void(0);" @click="go_zixun(item.id)">
                                 <img :src="item.file_url"/>
                             </a>
@@ -224,7 +225,7 @@
         <div class="banner">
             <swiper :options="swiperOption" ref="mySwiper">
               <!-- slides -->
-              <swiper-slide v-for="(item,index) in listImg"><img :src="item.ad_code"></swiper-slide>
+              <swiper-slide v-for="(item,index) in listImg" :key="index"><img :src="item.ad_code"></swiper-slide>
              
               <!-- Optional controls -->
               <div class="swiper-pagination" slot="pagination"></div>
@@ -284,6 +285,7 @@
                     <ul>
                         <li 
                           v-for="(item,index) in zhishu_tab"
+                          :key="index"
                           @click="click_zhishutab(index)"
                           :data-index="index"
                           :class="index==zhishutab_num?'on':''">{{item}}</li>
@@ -299,7 +301,7 @@
                         </li>
                         <swiper :options="swiperOption2" ref="mySwiper" style="height:400px;overflow:hidden;">
                           <!-- slides -->
-                          <swiper-slide v-for="(item,index) in zhishu" @click="go_hangqing(item.id)">
+                          <swiper-slide v-for="(item,index) in zhishu" :key="index" @click="go_hangqing(item.id)">
                             <li>
                                 <div class="name">{{item.h_chanpingm}}</div>
                                 <div class="price">{{item.h_cenkao}}</div>
@@ -308,7 +310,7 @@
                             </li>
                           </swiper-slide>
                         </swiper>
-                        <li v-for="(item,index) in zhishu">
+                        <li v-for="(item,index) in zhishu" :key="index">
                             <div class="name">{{item.h_chanpingm}}</div>
                             <div class="price">{{item.h_cenkao}}</div>
                             <div class="shengdie">{{item.wenzibd}}{{item.h_zhangdiee}}</div>
@@ -329,7 +331,7 @@
                 </div>
                 <div class="xinpin_list">
                     <ul>
-                        <li v-for="(item,index) in hangqing">
+                        <li v-for="(item,index) in hangqing" :key="index">
                             <a href="javascript:void(0)" @click="go_hangqing(item.id)">
                                 <div class="img">
                                     <img :src="item.goods_img"/>
@@ -358,7 +360,7 @@
                 </div>
                 <div class="pifa_list">
                     <ul>
-                        <li v-for="(item,index) in pifa"  @click="go_shop_detail(item.id)">
+                        <li v-for="(item,index) in pifa" :key="index"  @click="go_shop_detail(item.id)">
                             <a href="javascript:void(0)">
                                 <div class="img">
                                     <img :src="item.goods_img"/>
@@ -403,6 +405,7 @@ export default {
         zhishu_tab:['所有指数','当年茶指数','新茶指数','中期茶指数','老茶指数'],
         zhishutab_num:0,
         zhishu_index:0,
+        brand_index:11,
         listImg:[],//轮播列表
         hangqing:[],//行情列表
         pifa:[],//批发列表
@@ -485,24 +488,25 @@ export default {
         this.$router.push({name:'shop_detail',query:{id:id}})
     },
     change_band(index){
-       this.zhishu_index = index;
-         this.$axios({
-            url:'http://cy.gzziyu.com/mobile/pcindex.php?Action=chayezhishu',
-            method:'post',
-            params:{
-                shuzi:index
-            }
-         })
-         .then((res)=>{
-            console.log(res)
-            this.zhishu = res.data
-         })
+       this.brand_index = index;
+       this.zhishutab_num=0
+        this.$axios({
+        url:'http://cy.gzziyu.com/mobile/pcindex.php?Action=chayezhishu&shuzi=',
+        method:'post',
+        params:{
+            brand_id:index
+        }
+        })
+        .then((res)=>{
+        console.log(res)
+        this.zhishu = res.data
+        })
     },
     // 点击切换指数
     click_zhishutab(index){
       this.zhishutab_num = index;
       var that = this;
-      axios.post(that.GLOBAL.url+'pcindex.php?Action=chayezhishu&shuzi='+index)
+      axios.post(that.GLOBAL.url+`pcindex.php?Action=chayezhishu&shuzi=${index}&brand_id=${this.brand_index}`)
       .then((res) =>{
         console.log(res);
         this.zhishu = [];
@@ -532,7 +536,7 @@ export default {
     // 指数列表
     getzhishuList(){
       var that = this;
-      axios.post(that.GLOBAL.url+'pcindex.php?Action=chayezhishu&shuzi=0')
+      axios.post(that.GLOBAL.url+'pcindex.php?Action=chayezhishu&shuzi=&brand_id=11')
       .then((res) =>{
         console.log(res);
         this.zhishu = res.data
@@ -561,7 +565,6 @@ export default {
       var that = this;
       axios.post(that.GLOBAL.url+'pcindex.php?Action=pinpaipifa')
       .then((res) =>{
-        console.log(res);
         this.pifa = res.data;
         this.pifa_right = res.data.slice(1,2)
       })
@@ -604,10 +607,12 @@ export default {
 /*banner样式*/
 @import './css/index.scss';
 .swiper-slide{
+    height: 540px;
     overflow: hidden;
 }
 .swiper-slide img{
-    width: 100%;
+    min-width: 100%;
+    max-height: 540px;
 }
 .zixun_list ul li a{
     float: left;
@@ -629,5 +634,8 @@ export default {
 }
 .tuandui .tuan_list ul li{
     height: 420px;
+}
+.ca_list li{
+    cursor: pointer;
 }
 </style>

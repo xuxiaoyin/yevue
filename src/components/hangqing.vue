@@ -8,14 +8,14 @@
             </div>
             <div class="container">
                 <div class="classify">
-                    <div class="class_list" v-for="(item,index) in attr">
+                    <div class="class_list" v-for="(item,index) in attr" :key="index">
                         <div class="label">{{item.filter_attr_name}}：</div>
                         <ul>
                             <!-- <li class="active">全部</li> -->
                             <li 
                                 :class="items.active?'active':''"
                                 @click="change_attr(index,indexs,items.attr_id)" 
-                                v-for="(items,indexs) in item.attr_list">{{items.attr_value}}</li>
+                                v-for="(items,indexs) in item.attr_list" :key="indexs">{{items.attr_value}}</li>
                         </ul>
                     </div>
                     
@@ -29,7 +29,7 @@
                             <div class="title">益问益答</div>
                             <div class="nav">
                                 <ul>
-                                    <li v-for="(item,index) in wenda_list">
+                                    <li v-for="(item,index) in wenda_list" :key="index">
                                         <div class="nav_title"><span>？</span>{{item.msg_title}}</div>
                                         <div class="p">{{item.msg_content}}</div>
                                     </li>
@@ -41,7 +41,7 @@
                         <div class="two">
                             <div class="title">浏览记录</div>
                             <ul>
-                                <li v-for="(item,index) in youlanjilv" @click="go_detail(item.goods_id)">
+                                <li v-for="(item,index) in youlanjilv" :key="index" @click="go_detail(item.goods_id)">
                                     <a href="javascrpt:void(0)">
                                         <img :src="item.goods_img"/>
                                     </a>
@@ -67,7 +67,7 @@
                         </div>
                         <div class="product_list">
                             <ul>
-                                <li v-for="(item,index) in lists" @click="go_detail(item.goods_id)">
+                                <li v-for="(item,index) in lists" :key="index" @click="go_detail(item.goods_id)">
                                     <a href="javascrpt:void(0)">
                                         <img :src="item.goods_img"/>
                                     </a>
@@ -105,13 +105,13 @@
             <div class="fenlei">
                 <div class="container-m">
                     <ul>
-                        <li class="list" v-for="(item,index) in attr">
+                        <li class="list" v-for="(item,index) in attr" :key="index">
                             <div class="fenlei_title">{{item.filter_attr_name}}</div>
                             <ol>
                                 <li
                                     :class="items.active?'on':''"
                                 @click="change_attr(index,indexs,items.attr_id)" 
-                                v-for="(items,indexs) in item.attr_list">{{items.attr_value}}</li>
+                                v-for="(items,indexs) in item.attr_list" :key="indexs">{{items.attr_value}}</li>
                             </ol>
                         </li>
                        
@@ -131,7 +131,7 @@
             <div class="pro_list-m">
                 <div class="container-m">
                     <ul>
-                        <li v-for="(item,index) in lists" @click="go_detail(item.goods_id)">
+                        <li v-for="(item,index) in lists" :key="index" @click="go_detail(item.goods_id)">
                                 <div class="img">
                                     <img :src="item.goods_img"/>
                                 </div>
@@ -197,7 +197,7 @@
             },
              handleCurrentChange(val) {
                 var that = this;
-                console.log(`当前页: ${val}`);
+                //console.log(`当前页: ${val}`);
                 this.get_list(val)
                 
                 
@@ -213,7 +213,7 @@
                     }
                 })
                 .then((res)=>{
-                    console.log(res)
+                    //console.log(res)
                     this.lists = res.data
                 })
             },
@@ -221,9 +221,10 @@
                 this.paidui_index = index;
                 var brand;
                 this.attr[0].attr_list.map((res)=>{
-                    console.log(res)
+                    console.log("默认"+res)
                     if(res.active){
-                        brand = res.attr_id
+                        brand = res.attr_id;
+                        console.log('brand'+brand)
                     }
                 })
                 switch(index){
@@ -232,7 +233,7 @@
                         url:'http://cy.gzziyu.com/mobile/category.php?id=1',
                         method:'post',
                         params:{
-                            brand:brand
+                            attr_id:brand
                         }
                     })
                     .then((res)=>{
@@ -254,14 +255,14 @@
                         }
                     })
                     .then((res)=>{
-                        console.log(res)
+                        //console.log(res)
                         
                         this.$axios({
                             url:'http://cy.gzziyu.com/mobile/'+res.data,
                             method:'post',
                         })
                         .then((ress)=>{
-                            console.log(ress)
+                            //console.log(ress)
                             
                             this.lists = ress.data
                         })
@@ -280,14 +281,14 @@
                         }
                     })
                     .then((res)=>{
-                        console.log(res)
+                        //console.log(res)
                         
                          this.$axios({
                             url:'http://cy.gzziyu.com/mobile/'+res.data,
                             method:'post',
                         })
                         .then((ress)=>{
-                            console.log(ress)
+                            //console.log(ress)
                             
                             this.lists = ress.data
                         })
@@ -306,14 +307,14 @@
                         }
                     })
                     .then((res)=>{
-                        console.log(res)
+                        //console.log(res)
                         
                          this.$axios({
                             url:'http://cy.gzziyu.com/mobile/'+res.data,
                             method:'post',
                         })
                         .then((ress)=>{
-                            console.log(ress)
+                            //console.log(ress)
                             
                             this.lists = ress.data
                         })
@@ -330,8 +331,9 @@
                     item.active = false
                 })
                 this.attr[index].attr_list[childindex].active = !this.attr[index].attr_list[childindex].active;
-                console.log(this.commonSend);
-                console.log(this.attr)
+                //console.log(this.commonSend);
+                //console.log(this.attr)
+                this.get_list(1);
                 this.$axios({
                     url:"https://cy.gzziyu.com/mobile/category.php?id=1&price_min=0&price_max=0&filter_attr=",
                     method:'post',
@@ -344,8 +346,8 @@
                     }
                 })
                 .then((res)=>{
-                    console.log(res)
                     this.lists = res.data
+                    //console.log('测试'+res)
                 })
             },
             // 获取分类列表
@@ -358,7 +360,7 @@
                     }
                 })
                 .then((res)=>{
-                    console.log(res)
+                    //console.log(res)
                     for (let i = 0; i < res.data.length; i++) {
                         res.data[i].attr_list[0].active = true
                     }
@@ -380,7 +382,7 @@
                     }
                 })
                 .then((res)=>{
-                    console.log(res)
+                    //console.log(res)
                     
                     this.lists = res.data
                 })
@@ -392,12 +394,16 @@
                     method:'post',
                     params:{
                         brand:id,
-                        page:page
+                        page:page,
+                        id:1,
+                        price_min:0,
+                        price_max:0,
+                        filter_attr:this.commonSend.join('.')
                     }
                 })
                 .then((res)=>{
-                    console.log('yeshu')
-                    console.log(res)
+                    //console.log('yeshu')
+                    //console.log(res)
                     this.data_info = res.data
                     
                 })
@@ -417,8 +423,8 @@
                    headers: {'content-Type': 'application/json'}
                 })
                 .then((res)=>{
-                    console.log('浏览记录')
-                    console.log(res)
+                    //console.log('浏览记录')
+                    //console.log(res)
                     this.youlanjilv = res.data
                 })
             },
@@ -431,7 +437,7 @@
                     method:'post'
                 })
                 .then((res)=>{
-                    console.log(res)
+                    //console.log(res)
                     this.wenda_list = res.data
                 })
             }
@@ -654,6 +660,7 @@
         .product_list{
             width: 100%;
             margin-top: 20px;
+            text-align: center;
             ul{
                 width: 100%;
                 li{
@@ -700,6 +707,15 @@
                         }
                         span.green{
                             color: #0d993f;
+                        }
+                        span.up{
+                            color: #ee0a0d;
+                        }
+                        span.down{
+                            color: #0d993f;
+                        }
+                        span.ping{
+                            color: #120ddc;
                         }
                     }
                     &:nth-child(4n){

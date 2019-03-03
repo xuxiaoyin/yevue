@@ -4,7 +4,7 @@
 			
 			
 			<div class="router">
-				<div class="container">
+				<div class="container page">
 					<!-- <a href="/">首页</a>><a href="about_me">关于我们</a> -->
 					<router-link to="/">首页</router-link>><a href="javascript:void(0)">关于我们</a>
 					<div class="about_text" v-html="text">
@@ -54,6 +54,10 @@
 </script>
 
 <style lang="scss">
+.page{
+	width:1000px;
+	margin: 0 auto;
+}
 #content{
     overflow: hidden;
     .router{

@@ -1,5 +1,6 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+import 'babel-polyfill'
 import Vue from 'vue'
 import App from './App'
 import router from './router'
@@ -9,6 +10,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(Element, { size: 'small', zIndex: 3000 });
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
+import 'vue-social-share/dist/client.css';
 import store from './store/store'
 
 import global_ from './components/global'//引用文件
@@ -22,6 +24,12 @@ Vue.use(require('vue-wechat-title'))
 import VueAreaLinkage from 'vue-area-linkage';
 import 'vue-area-linkage/dist/index.css';
 Vue.use(VueAreaLinkage)
+
+import ProductZoomer from 'vue-product-zoomer'
+Vue.use(ProductZoomer)
+
+import Share from 'vue-social-share'
+Vue.use(Share)
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 Vue.prototype.$axios = axios;// 将axios配置成vue的原型

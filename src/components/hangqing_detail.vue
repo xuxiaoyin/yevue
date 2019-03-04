@@ -27,8 +27,8 @@
 					</div> -->
                     <div class="middle_top_left">
                         <ProductZoomer
-                        :base-images="images"
-                        :base-zoomer-options="zoomerOptions"
+                            :base-images="images"
+                            :base-zoomer-options="zoomerOptions"
                         />
                     </div>
 
@@ -609,13 +609,14 @@
                 value5:  ["2016-12-06", "2019-01-25"],
                 'zoomerOptions': {
                     'zoomFactor': 3,
-                    'pane': 'pane',
+                    'pane': 'container-round',
                     'hoverDelay': 300,
-                    'namespace': 'zoomer',
+                    'namespace': 'inline-zoome',
                     'move_by_click':false,
-                    'scroll_items': 2,
+                    'scroll_items': 7,
                     'choosed_thumb_border_color': "#dd2c00"
                 },
+   
                 'images': {
                     'thumbs':[],
                     'normal_size':[],
@@ -654,14 +655,13 @@
 		},
 		mounted(){
             this.echarts()
-            this.get_info(this.$route.query.id)
 			//console.log(this.info)
 			
 		
 		},
 		watch: {
 	        $route(to) {
-	            console.log(to)
+	            //console.log(to)
 	            document.body.scrollTop = 0
             	document.documentElement.scrollTop = 0
 	            this.get_info(this.$route.query.id)
@@ -925,7 +925,7 @@
                     this.info = res.data
                     let angle = this.info.zonghe/100;
                     let _img=res.data.gallery;
-                    this.zoomerOptions.scroll_items=_img.length
+                    this.zoomerOptions.scroll_items=res.data.gallery.length
                      for(var i=0; i<_img.length;i++){
                          var _obj={
                              'id': i,

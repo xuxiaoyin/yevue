@@ -108,8 +108,8 @@
           <div class="menu">
             <ul>
               <li>
-                <a href="javascript:void(0);"><img src="static/img/kefu.png" alt=""></a>
-                <div class="chlid_div">联系客服：{{tel}}</div>
+                <a :href="kefuUrl" target="_blank"><img src="static/img/kefu.png" alt=""></a>
+                <!-- <div class="chlid_div">联系客服：{{tel}}</div> -->
               </li>
               <li>
                 <a href="javascript:void(0);"><img src="static/img/phone.png" alt=""></a>
@@ -186,7 +186,8 @@ export default {
         showsub:false,
         options5: [],
         options6:[],
-        value10: []
+        value10: [],
+        kefuUrl:''
       }
      },
      mounted(){
@@ -347,7 +348,8 @@ export default {
             method:'post'
           })
           .then((res)=>{
-            console.log(res)
+            console.log('信息')
+            console.info(res.data)
             res.data.map(function (item) {
               if(item.code == "shop_logo"){
                 that.logo = item.value
@@ -357,6 +359,9 @@ export default {
               }
                if(item.code == "service_phone"){
                 that.tel = item.value
+              }
+              if(item.code == "kefuwebsite"){
+                that.kefuUrl = item.value
               }
             })
            

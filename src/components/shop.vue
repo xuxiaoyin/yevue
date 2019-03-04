@@ -14,7 +14,7 @@
                 <li 
                     v-for="(item,index) in band_list" 
                     :class="item.selected ==1?'active':''"
-                    @click="change_band(index)">{{item.brand_name}}</li>
+                    @click="change_band(index)">{{item.cat_name}}</li>
               </ul>
             </div>
             
@@ -337,7 +337,7 @@
                     url:'http://cy.gzziyu.com/mobile/ny_flow_goods.php?action=cat_filter_attr',
                     method:'post',
                     params:{
-                        id:1
+                        id:2
                     }
                 })
                 .then((res)=>{
@@ -357,11 +357,12 @@
                 })
                  this.band_list[index].selected = 1;
                  this.$axios({
+                   // url:'http://cy.gzziyu.com/mobile/category.php',
                     url:'http://cy.gzziyu.com/mobile/category.php',
                     method:'post',
                     params:{
-                        id:2,
-                        brand: this.band_list[index].brand_id
+                        id:this.band_list[index].cat_id,
+                       // brand: 
                     }
                  })
                  .then((res)=>{
@@ -372,8 +373,9 @@
                     url:'http://cy.gzziyu.com/mobile/category.php&Action=yemian',
                     method:'post',
                     params:{
-                        id:2,
-                        brand: this.band_list[index].brand_id
+                        //id:this.band_list[index].cat_id
+                       // brand: this.band_list[index].cat_id
+                        brand:this.band_list[index].cat_id
                     }
                  })
                  .then((res)=>{
@@ -383,21 +385,27 @@
             },
             get_band(){
                 this.$axios({
-                    url:'http://cy.gzziyu.com/mobile/ny_flow_goods.php?action=brand',
-                    method:'post'
+                    url:'http://cy.gzziyu.com/mobile/pcindex.php?Action=chanpinfenlei',
+                    method:'post',
+                    params:{
+                        id:2
+                    }
                 })
                 .then((res)=>{
                     console.log(res)
                     this.band_list = res.data
                 })
             },
-            get_list(page){
+            get_list(page,id){
                 var that = this;
                 this.$axios({
                     url:that.GLOBAL.url+'category.php?id=2',
                     method:'post',
                     params:{
-                        page:page
+                        //page:page,
+                        brand:id,
+                        page:page,
+                        filter_attr:this.commonSend.join('.')
                     }
                 })
                 .then((res)=>{
@@ -408,7 +416,13 @@
                     url:that.GLOBAL.url+'category.php?id=2&Action=yemian',
                     method:'post',
                     params:{
-                        page:page
+                        page:page,
+                        brand:id,
+                        page:page,
+                        price_min:0,
+                        price_max:0,
+                        filter_attr:this.commonSend.join('.')
+
                     }
                 })
                 .then((res)=>{

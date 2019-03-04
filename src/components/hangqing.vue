@@ -179,6 +179,7 @@
         watch: {
               $route(to){
                 this.pjtid = this.$route.query.id
+                console.log('pjtid'+this.pjtid)
                 if(to.path == '/hangqing'){
                     if(this.$route.query.keyword){
                         this.seach(this.$route.query.keyword)
@@ -377,7 +378,8 @@
                     method:'post',
                     params:{
                         brand:id,
-                        page:page
+                        page:page,
+                        filter_attr:this.commonSend.join('.')
 
                     }
                 })

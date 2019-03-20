@@ -142,9 +142,18 @@
                     if(res.data.success == 1){
                         alert('提交成功')
                         this.get_list()
+                        this.msg_title=''
+                        this.msg_content=''
+                        this.message_img=''
+                        this.typt_id=0
+                        this.backTop()
                      // this.$refs.upload.submit();
                     }
                 })
+            },
+            backTop() {
+                document.body.scrollTop = 0
+                document.documentElement.scrollTop = 0
             },
 			get_list(){
 				this.$axios({
@@ -153,6 +162,7 @@
 
 				})
 				.then((res)=>{
+                    console.log('问答')
 					console.log(res)
 					this.lists = res.data
 				})

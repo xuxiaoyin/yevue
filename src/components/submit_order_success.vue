@@ -15,7 +15,7 @@
                 <div class="btn_list">
                     <router-link :to="'/order_detail?id='+order_id">查看详情</router-link>
                     <router-link to="/shop">继续购买></router-link>
-                    <div v-html='pay_online'></div>
+                    <div v-html='pay_online' class="topay"></div>
                 </div>
             </div>
         </div>
@@ -59,6 +59,7 @@
             this.order_price = this.$route.query.order_price
             this.tel = this.$route.query.tel
             this.pay_online = this.$route.query.pay_online
+            console.log(this.pay_online)
             this.order_id = this.$route.query.order_id
                 
         },
@@ -73,6 +74,19 @@
     }
 </script>
 <style lang="scss">
+.topay{
+    display: inline-block;
+}
+.topay div{
+    display: inline-block;
+}
+.topay input{
+    height: 30px;
+    background: #fff;
+    border: #ee0a0d 1px solid;
+    padding: 0 20px;
+    color: #ee0a0d;
+}
 .router{
         font-size:14px;
         line-height:30px;

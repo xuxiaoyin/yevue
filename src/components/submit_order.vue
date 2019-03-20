@@ -3,7 +3,8 @@
         <div id="content">
             <div class="router">
                 <div class="container">
-                    <a href="###">首页</a>><a href="###">登录</a>
+                    <router-link to="/">首页</router-link>>
+                    <router-link to="/">提交订单</router-link>
                 </div>
             </div>
             <div class="container">
@@ -54,9 +55,10 @@
                     
                     <div class="radio_list">
                         <ul>
-                            <li :class="zhifu_index == 0?'check':''" @click="change_zhifu(0)" >微信支付</li>
+                            <li v-for="(item,index) in pay_list" :key="index" :class="zhifu_index==index?'check':''" @click="change_zhifu(index)">{{item.pay_name}}</li>
+                            <!-- <li :class="zhifu_index == 0?'check':''" @click="change_zhifu(0)" >微信支付</li>
                             <li :class="zhifu_index == 1?'check':''" @click="change_zhifu(1)">支付宝支付</li>
-                            <li :class="zhifu_index == 2?'check':''" @click="change_zhifu(2)">银联支付</li>
+                            <li :class="zhifu_index == 2?'check':''" @click="change_zhifu(2)">银联支付</li> -->
                         </ul>
                     </div>
                 </div>
@@ -112,8 +114,8 @@
                     <p>应付总额：<span class="price">￥{{total.goods_price}}</span></p>
                     
                 </div>
-                <div class="submit_btn">
-                    <a href="jacascript:void(0)" @click="suss">提交订单</a>
+                <div class="submit_btn"  @click="suss">
+                    <a href="jacascript:void(0)">提交订单</a>
                 </div>
             </div>  
         </div>
@@ -294,6 +296,7 @@
                     method: 'post',
                     url:this.GLOBAL.url+'ny_flow_cart.php?action=orderpayment'
                 }).then((res)=>{
+                    console.log('支付方式')
                     console.log(res);
                     this.pay_list = res.data
                     

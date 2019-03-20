@@ -6,7 +6,7 @@
 			</div>
 		</div>
 		<div class="password_01"  v-if="status == 0">
-			<div class="container">
+			<div class="container main">
 				<img src="static/img/get_password_01.png" class="get_password"/>
 				<form action="" method="post">
 						<div class="item">
@@ -59,7 +59,7 @@
 			<div class="container">
 				<img src="static/img/get_password_03.png" class="get_password"/>
 				<div class="tip">
-					<img src="img/order_success.png"/>用户名{{user_name}}找回密码成功！
+					<img src="static/img/order_success.png"/>用户名{{user_name}}找回密码成功！
 				</div>
 				<div class="btn_list">
 					<router-link to="/login">去登陆></router-link>
@@ -160,6 +160,10 @@
     width:856px;
     display: block;
     margin: 0 auto 73px;
+}
+.main{
+    padding: 30px 0;
+    background: #fff;
 }
  form{
         width: 680px;

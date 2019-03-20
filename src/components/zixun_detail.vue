@@ -8,7 +8,9 @@
 			<div class="container container1">
 				<div class="title">{{info.title}}</div>
 				<div class="beizhu"><span>来源：{{info.author}}</span><span>作者：{{info.author}}</span><span>阅读：{{info.is_open}}</span><span>发布时间：{{info.add_time}}</span>
-					<!-- <span><img src="static/img/fenxiang.png"/>分享到</span> -->
+					<a href="javascript:" @click="showShare=!showShare" class="share-btn"><img src="static/img/fenxiang.png"/><span>分享到</span></a>
+                    <a href="#" class="share" v-show="showShare">
+    <share :config="config" class="share"></share></a>
 
 				</div>
 				<div v-html="info.content"></div>
@@ -35,7 +37,19 @@
 		data(){
 			return {
 				info:{},
-				next:{}
+                next:{},
+                config:{
+                // url                 : '', // 网址，默认使用 window.location.href
+                // source              : '', // 来源（QQ空间会用到）, 默认读取head标签：<meta name="site" content="http://overtrue" />
+                // title               : '', // 标题，默认读取 document.title 或者 <meta name="title" content="share.js" />
+                // description         : '', // 描述, 默认读取head标签：<meta name="description" content="PHP弱类型的实现原理分析" />
+                // image               : '', // 图片, 默认取网页中第一个img标签
+                // sites               : ['qzone', 'qq', 'weibo','wechat', 'douban'], // 启用的站点
+                // disabled            : ['google', 'facebook', 'twitter'], // 禁用的站点
+                // wechatQrcodeTitle   : '微信扫一扫：分享', // 微信二维码提示文字
+                // wechatQrcodeHelper  : '<p>微信里点“发现”，扫一下</p><p>二维码便可将本文分享至朋友圈。</p>'
+                },
+                showShare:false
 			}
 		},
 		mounted(){
@@ -98,6 +112,11 @@
 	.localtion{
         width: 1000px;
         margin: 20px auto;
+    }
+    .share-btn img,.share-btn span{
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 4px;
     }
 	.detail{
     width: 100%;

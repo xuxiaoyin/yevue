@@ -11,15 +11,15 @@
             <div class="container">
                 <!--主体上部分-->
                 <div class="middle_top clear">
-                    <div class="middle_top_left">
+                    <div class="middle_top_left" v-if="info.gallery">
                         <div id="smll_box">
-                            <img :src="info.gallery[0]"/>
+                            <img :src="info.gallery[pic_index]"/>
                             <div id="box1"></div>
                         </div>
                         <div id="box"></div>
                         <div class="pro_list">
                             <ul>
-                                <li v-for="(item,index) in info.gallery" :key="index"><img :src="item"></li>
+                                <li v-for="(item,index) in info.gallery" :key="index" @click="pic_index=index"><img :src="item"></li>
                              </ul>
                         </div>
                         <a class="prev"></a>
@@ -37,7 +37,7 @@
                             <div class="canshu">
                                 <ul>
                                     <li>品牌：{{info.brand_name}}</li>
-                                    <li>年份:{{info.shengchanriqi}}</li>
+                                    <li>年份：{{info.shengchanriqi}}</li>
                                     <li>生成工艺：{{info.gongyi}}</li>
                                     <li>规格：{{info.goods_brief}}</li>
                                 </ul>
@@ -56,12 +56,15 @@
                             </div>
                             <div class="button">
                                 <a href="javascript:void(0)" @click="add_cart">加入购物车</a>
-                                <a href="javascript:void(0)" @click="buy">立即购买</a>
+                                <a href="javascript:void(0)" @click="buy" class="buy">立即购买</a>
                                 
                             </div>
                             <div class="pingfen">
                                 <div class="btn_pinfeng">我要评分</div>
-                                共35条评分
+                                共{{info.pinglunshu}}条评分
+                                <a href="###" style="margin-right:20px; margin-left:20px;" @click="guanzhu(info.id)"><img :src="isGz?'static/img/xin.png':'static/img/xin-normal.png'"/> {{gztext}}</a>
+								<a href="###" @click="showShare=!showShare"><img src="static/img/fenxiang.png"/> 分享到
+    <share :config="config" class="share" v-show="showShare"></share></a>
                             </div>
                     </div>
                 </div>
@@ -300,13 +303,33 @@
                         prevEl: '.swiper-button-prev',
                     }
                 },
+                 config:{
+                // url                 : '', // 网址，默认使用 window.location.href
+                // source              : '', // 来源（QQ空间会用到）, 默认读取head标签：<meta name="site" content="http://overtrue" />
+                // title               : '', // 标题，默认读取 document.title 或者 <meta name="title" content="share.js" />
+                // description         : '', // 描述, 默认读取head标签：<meta name="description" content="PHP弱类型的实现原理分析" />
+                // image               : '', // 图片, 默认取网页中第一个img标签
+                // sites               : ['qzone', 'qq', 'weibo','wechat', 'douban'], // 启用的站点
+                // disabled            : ['google', 'facebook', 'twitter'], // 禁用的站点
+                // wechatQrcodeTitle   : '微信扫一扫：分享', // 微信二维码提示文字
+                // wechatQrcodeHelper  : '<p>微信里点“发现”，扫一下</p><p>二维码便可将本文分享至朋友圈。</p>'
+                },
+                pic_index:0,
+                showShare:false,
+                isGuanzhu:false,
+                pic_index:0
 			}
 		},
 		created(){
             this.get_eva(this.$route.query.id)
 			this.get_info(this.$route.query.id)
              this.guanggao()
-		},
+        },
+        computed:{
+            gztext() {
+                return this.isGz?'取消关注':'加关注'
+            }
+        },
 		watch: {
 	        $route(to) {
 	            this.get_info(this.$route.query.id)
@@ -315,7 +338,39 @@
 
 	        }
 	    },
-		methods:{// 广告
+		methods:{
+            //关注
+            guanzhu(info_id){
+                if (!sessionStorage.getItem('userInfos')) {
+                    
+                    alert('请先登录')
+                this.$router.push('login')
+                return false
+                }
+                var userInfo = JSON.parse(sessionStorage.getItem('userInfos'));
+                this.$axios({
+                    url:'http://cy.gzziyu.com/mobile/pcindex.php?Action=guanzhu',
+                    method:'post',
+                    params:{
+                        goods_id:info_id,
+                        openid:userInfo.openid
+                    }
+                })
+                .then((res)=>{
+                   // console.log('关注')
+                    //console.info(res)
+                    if(res.data.msg == "已关注"){
+                        this.isGz=true;
+                    }else{
+                    this.isGz=false;
+                    }
+                })
+                .catch((err)=>{
+                    console.log(err)
+                })
+            },
+            
+            // 广告
             guanggao(){
                 console.log('guanggao')
                 this.$axios({
@@ -443,6 +498,7 @@
 					}
 				})
 				.then((res)=>{
+                    console.log('商品详情')
 					console.log(res)
 					this.info = res.data
 				})
@@ -492,12 +548,13 @@
   .middle_top .middle_top_left #smll_box{
       border:1px #e0e0e0 solid;
         display: block;
-        width: 500px;
-        height: 500px;
+        width: 480px;
+        height: 480px;
+        padding: 10px;
 }
   .middle_top .middle_top_left #smll_box img{
-    width: 500px;
-    height: 500px;
+    width: 480px;
+    height: 480px;
 }
 .swiper-slide{
     img{
@@ -536,14 +593,14 @@
     position: absolute;
    bottom: 32px;
     left: -11px;
-    background: url(../../static/img/prev_gray.png) no-repeat;
+    background: url(../assets/prev_gray.png) no-repeat;
 }
 
   .middle_top .middle_top_left a.next{
     position: absolute;
        bottom: 32px;
     right: -11px;
-    background: url(../../static/img/next_gray.png) no-repeat;
+    background: url(../assets/next_gray.png) no-repeat;
 }
 
   .middle_top .middle_top_left .pro_list{
@@ -570,7 +627,6 @@
     height: 62px;
     float: left;
     padding: 1px;
-    position: absolute;
     
 }
   .middle_top .middle_top_left .pro_list ul li.on{
@@ -607,7 +663,7 @@
     }
     .canshu{
         width: 650px;
-        height: 95px;
+        height: 70px;
         border:1px #d9d9d9 solid;
         margin: 30px 0 45px 0;
         padding: 10px 0;
@@ -631,7 +687,7 @@
         font-size: 14px;
         color: #666666;
          line-height:30px;
-         margin: 10px 0;
+         margin: 30px 0;
         .btn_pinfeng{
             margin-right: 25px;
             float: left;
@@ -821,13 +877,18 @@
     display: inline-block;
     text-align: center;
     line-height: 50px;
-    width: 200px;
-    height: 50px;
+    width: 160px;
+    height: 48px;
     border: none;
     background: #FF0000;
-    margin-right: 10px;
+    margin-right: 25px;
     padding: 0;
     color: #FFFFFF;
+    font-size: 20px;
+    border-radius: 4px;
+}
+.middle_top .middle_top_right .button a.buy{
+    background: #edb009;
 }
 .chat{
     clear: both;

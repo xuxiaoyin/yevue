@@ -12,15 +12,15 @@
 				</div>
 			</div>
 			<div class="item">
-				<div class="label">确认旧密码：</div>
+				<div class="label">新密码：</div>
 				<div class="input">
-					<input type="password"  v-model="oldmima2" placeholder="请输入确认旧密码" />
+					<input type="password"  v-model="oldmima2" placeholder="请输入新密码" />
 				</div>
 			</div>
 			<div class="item">
-				<div class="label">新密码：</div>
+				<div class="label">确认新密码：</div>
 				<div class="input">
-					<input type="password" v-model="newmima" placeholder="请输入新密码" />
+					<input type="password" v-model="newmima" placeholder="请输入确认新密码" />
 				</div>
 			</div>
 			<button type="button" @click="change">提交</button>
@@ -35,18 +35,18 @@
 					</div>
 				</div>
 				<div class="item">
-					<div class="label">确认旧密码：</div>
+					<div class="label">新密码：</div>
 					<div class="input">
-						<input type="password" v-model="oldmima2" placeholder="请输入确认旧密码" />
+						<input type="password" v-model="oldmima2" placeholder="请输入新密码" />
 					</div>
 				</div>
 				<div class="item">
-					<div class="label">新密码：</div>
+					<div class="label">确认新密码：</div>
 					<div class="input">
-						<input type="password" v-model="newmima" placeholder="请输入新密码" />
+						<input type="password" v-model="newmima" placeholder="请输入确认新密码" />
 					</div>
 				</div>
-				<button type="button" @click="change"/>提交</button>
+				<button type="button" @click="change">提交</button>
 			</form>
 		</div>
 	</div>

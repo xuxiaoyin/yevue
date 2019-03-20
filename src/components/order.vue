@@ -22,22 +22,22 @@
                     <ul>
                         <li v-for="(item,index) in list">
                             <div class="li_header"><span>{{item.order_time}}</span><span>订单号：{{item.order_sn}}</span></div>
-                            <div class="line" v-for="(items,indexs) in item.goods_list">
+                            <div class="line" >
                                 <div class="pro_img li_common">
-                                    <div class="one" >
+                                    <div class="one" v-for="(items,indexs) in item.goods_list" :key="indexs" >
                                         <img :src="items.goods_thumb" alt="">
                                         <p>{{items.goods_name}}</p>
                                         <span>品牌：黎明 ，年份：</span>
                                     </div>
                                 </div>
-                                <div class="price li_common" :style="'height:'+(100*item.goods_list.length)+'px'"><p class="red">￥{{items.goods_price}} /件</p></div>
-                                <div class="num li_common" :style="'height:'+(100*item.goods_list.length)+'px'"><p>1</p></div>
+                                <div class="price li_common" :style="'height:'+(100*item.goods_list.length)+'px'" ><p class="red" v-for="(items,indexs) in item.goods_list" :key="indexs" style="height:80px;">￥{{items.goods_price}} /件</p></div>
+                                <div class="num li_common" :style="'height:'+(100*item.goods_list.length)+'px'"><p>{{item.zgoods_number}}</p></div>
                                 <div class="price li_common" :style="'height:'+(100*item.goods_list.length)+'px'"><p class="red">￥{{item.total_fee}}</p></div>
                                 <div class="status li_common" :style="'height:'+(100*item.goods_list.length)+'px'"><p>{{item.biaoti}}</p></div>
                                 <div class="open li_common" :style="'height:'+(100*item.goods_list.length)+'px'">
-                                    <!-- <a href="javascript:void(0)" class="pay">去付款</a> -->
+                                    <a href="javascript:void(0)" class="pay" v-if="item.zhuangtai == 1" @click="go_detail(item.order_id)">去付款</a>
                                     <a href="javascript:void(0)" class="eva" v-if="item.zhuangtai == 2" @click="queren(item.order_id)">确认收货</a>
-                                    <!-- <a href="javascript:void(0)" class="eva"  v-if="!(item.zhuangtai == 1)">去评价</a> -->
+                                    <!-- <a href="javascript:void(0)" class="eva"  v-if="!(item.zhuangtai == 3)">去评价</a> -->
                                     <a href="javascript:void(0)" @click="cenel(item.order_id)" v-if="!(item.zhuangtai == 0)">取消订单</a>
                                     <a href="javascript:void(0)"  @click="go_detail(item.order_id)">查看订单</a>
                                 </div>
@@ -61,7 +61,7 @@
                 </div>
                 <div class="order_list-m m">
                     <ul>
-                        <li v-for="(item,index) in list">
+                        <li v-for="(item,index) in list" :key="index">
                             <div class="order_title" >
                                 <div class="container-m">
                                     订单编号：{{item.order_sn}}
@@ -143,6 +143,7 @@
                         }
                     }) 
                     .then((res)=>{
+                        console.log('订单')
                         console.log(res)
                         this.list = res.data
                     })
@@ -205,8 +206,12 @@
                         }
                     }) 
                     .then((res)=>{
+                        console.log("订单")
                         console.log(res)
                         this.list = res.data
+                        .filter(item=>{
+                            return item.zgoods_number>0
+                        })
                     })
                
                 
@@ -601,12 +606,15 @@
                         margin:0 auto 5px;
                         box-sizing:border-box;
                         &.pay{
-                            background: #ee0a0d;
-                            color: #fff;
+                            background: #fff;
+                            color: #ee0a0d;
+                            border:1px solid #ee0a0d;
+                            border-radius: 0;
                         }
                          &.eva{
                             border:1px solid #ee0a0d;
                             color: #ee0a0d;
+                            border-radius: 0;
                         }
                     }
                 }

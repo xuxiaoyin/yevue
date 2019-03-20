@@ -10,17 +10,14 @@
 			
 			<div class="container">
 				<!--主体上部分-->
-				<div class="middle_top clear" style="overflow:visible">
-					<div class="middle_top_left" id="demo" v-if="info.gallery">
-						<div id="smll_box1" style="width:300px; height:300px; padding:10px;" class="pic-box" ref="smallbox">
-                            <pic-zoom :url="info.gallery[pic_index]" :scale="3" style="position:relative; width:300px; height:300px; left:0; top:0" ></pic-zoom>
-							<!-- <img :src="info.gallery[pic_index]"/>
-                            <div id="float-box"></div> -->
+				<div class="middle_top clear">
+					<div class="middle_top_left">
+						<div id="smll_box">
+							<img :src="info.gallery[pic_index]"/>
+							<div id="box1"></div>
 						</div>
-                        <!-- <div id="big-box" style="position:absolute; width:300px; height:300px; border:1px solid red; top:0; left:310px; overflow:hidden; background:#fff; z-index:99999; display:none;">
-                            <img :src="info.gallery[pic_index]" style="width:600px; height:600px; position: absolute;"/>
-                        </div> -->
-						<div class="pro_list1">
+						<div id="box"></div>
+						<div class="pro_list">
 							 <ul :style="'width:'+(62*info.gallery.length)+'px'" ref="smallimg">
 							 	<li v-for="(item,index) in info.gallery" :key="index+info.goods_id" @click="pic_index=index"><img :src="item"></li>
 							 </ul>
@@ -34,15 +31,14 @@
 								<img :src="guanggaowei.ad_code"/>
 							</div>
 							<div class="title">{{info.goods_name}}<span></span></div>
-							<div class="price">参考价：<span>￥{{info.cenkaojia}}/件</span>  <small style="margin-left:10px;">(期货价：￥{{info.market_price}}&nbsp;&nbsp;&nbsp;&nbsp;参考价更新于{{info.zygengxinshijian}})</small> </div>
+							<div class="price">参考价：<span>￥{{info.cenkaojia}}/件</span>  <small>(期货价：￥{{info.market_price}}  参考价更新于{{info.zygengxinshijian}})</small> </div>
 							
 							
 							
 							<div class="canshu">
 								<ul>
-	
+									<li>品牌：{{info.brand_name}}</li>
 									<li>年份:{{info.zygengxinshijian}}</li>
-                                    <li>批次：{{info.pici}}</li>
 									<li>生成工艺：{{info.gongyi}}</li>
 									<li>规格：{{info.goods_brief}}</li>
 									<li>净含量：{{info.goods_weight}}kg</li>
@@ -102,10 +98,8 @@
 										<div class="fenshu">{{info.shoucang}}分</div>
 									</div>
 								</div>
-								<div class="right" style="position:relative">
+								<div class="right">
 									<canvas id="canvas" width="96" height="96"></canvas>
-                                    <span style="position:absolute; z-index:99999; top:28px; left:0;font-size:12px; color:#333333; font-weight:bold; width:96px; text-align:center;">综合评分</span>
-                                    <span style="position:absolute; z-index:99999; top:50px; left:0;font-size:20px; color:#ffcc33; font-weight:bold; width:96px; text-align:center;">{{info.zonghe}}</span>
 								</div>
 							</div>
 							
@@ -118,8 +112,8 @@
 								<div class="btns"><router-link to="/qiugou">发布求购</router-link></div>
 								<div class="btns">存茶评估</div>
 								<a href="###" style="margin-right:20px;" @click="guanzhu(info.id)"><img :src="isGz?'static/img/xin.png':'static/img/xin-normal.png'"/> {{gztext}}</a>
-								<a href="###" @click="showShare=!showShare"><img src="static/img/fenxiang.png"/> 分享到
-    <share :config="config" class="share" v-show="showShare"></share></a>
+								<a href="###"><img src="static/img/fenxiang.png"/> 分享到
+    <share :config="config" class="share"></share></a>
                                 
 							</div>
 					</div>
@@ -243,7 +237,7 @@
 						</ul>
 						<ul>
 							<li>出品商</li>
-							<li>{{info.chupinshang}}</li>
+							<li>{{info.brand_name}}</li>
 							
 						</ul>
 						<ul>
@@ -263,10 +257,8 @@
 					
 					<div class="eva">
 						<div class="zhishu">
-							<div class="right" style="position:relative;">
+							<div class="right">
 									<canvas id="canvas1" width="130" height="130"></canvas>
-                                    <span style="position:absolute; z-index:99999; top:46px; left:0;font-size:12px; color:#333333; font-weight:bold; width:130px; text-align:center;">综合评分</span>
-                                    <span style="position:absolute; z-index:99999; top:64px; left:0;font-size:20px; color:#ffcc33; font-weight:bold; width:130px; text-align:center;">{{info.zonghe}}</span>
 								</div>
 								<div class="left">
 									<div class="zhishu_list">
@@ -552,7 +544,6 @@
 	var echarts = require('echarts');
     import { swiper, swiperSlide } from 'vue-awesome-swiper'
     import GitHubBadge from 'vue-github-badge'
-    import PicZoom from 'vue-piczoom'
 	export default {
 		name:'hangqing',
 		data(){
@@ -609,7 +600,7 @@
 		          }]
 		        },
 		        value4: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
-                value5:  ["2019-03-10", "2019-03-20"],
+                value5:  ["2016-12-06", "2019-01-25"],
             config:{
                 // url                 : '', // 网址，默认使用 window.location.href
                 // source              : '', // 来源（QQ空间会用到）, 默认读取head标签：<meta name="site" content="http://overtrue" />
@@ -622,7 +613,6 @@
                 // wechatQrcodeHelper  : '<p>微信里点“发现”，扫一下</p><p>二维码便可将本文分享至朋友圈。</p>'
             },
             pic_index:0,
-            showShare:false
 		}
         },
         computed: {
@@ -633,15 +623,14 @@
 		 components: {
 	      swiper,
           swiperSlide,
-          'github-badge': GitHubBadge,
-           PicZoom
+          'github-badge': GitHubBadge
 	     },
 		created(){
 			this.get_info(this.$route.query.id)
 			this.get_eva(this.$route.query.id)
 			this.change_cankao_tab(0)
 			this.seach()
-            this.guanggao()
+			this.guanggao()
 	
 		},
 		mounted(){
@@ -659,9 +648,9 @@
 	            this.get_eva(this.$route.query.id)
 	            this.change_cankao_tab(0)
 	            this.seach()
-	           	//console.log(to)
+	           	console.log(to)
 	            if(to.path == '/hangqing_detail'){
-	            	//console.log('行情详情')
+	            	console.log('行情详情')
 	            	this.echarts()
 	            	this.guanggao()
 	            }
@@ -708,8 +697,8 @@
                     }
                 })
                 .then((res)=>{
-                   // console.log('关注')
-                    //console.info(res)
+                    console.log('关注')
+                    console.info(res)
                     if(res.data.msg == "已关注"){
                         this.isGz=true;
                     }else{
@@ -722,7 +711,7 @@
             },
 			// 广告
 			guanggao(){
-				//console.log('guanggao')
+				console.log('guanggao')
 				this.$axios({
 					url:'https://cy.gzziyu.com/mobile/pcindex.php?Action=danzhang',
 					method:'post',
@@ -731,7 +720,7 @@
 					}
 				})
 				.then((res)=>{
-					//console.log('广告位,',res)
+					console.log('广告位,',res)
 					this.guanggaowei = res.data[0]
 				})
 			},
@@ -760,11 +749,11 @@
 				        bottom: '3%',
 				        containLabel: true
 				    },
-				    // toolbox: {
-				    //     feature: {
-				    //         saveAsImage: {}
-				    //     }
-				    // },
+				    toolbox: {
+				        feature: {
+				            saveAsImage: {}
+				        }
+				    },
 				    xAxis: {
 				        type: 'category',
 				        boundaryGap: false,
@@ -785,8 +774,7 @@
 				});
 			},
 			drawCircle(_options){
-                //console.log('画圆')
-			  	 //console.log(_options)
+			  	// console.log(_options)
 			    var options = _options || {};    //获取或定义options对象;
 			    options.angle = options.angle || 1;    //定义默认角度1为360度(角度范围 0-1);
 			    options.color = options.color || '#fff';    //定义默认颜色（包括字体和边框颜色）;
@@ -795,22 +783,22 @@
 			 
 			    var oBoxOne = document.getElementById(options.id);
 			    var sCenter = oBoxOne.width / 2;    //获取canvas元素的中心点;
-                var ctx = oBoxOne.getContext('2d');
+			    var ctx = oBoxOne.getContext('2d');
 			    var nBegin = Math.PI / 2;    //定义起始角度;
 			    var nEnd = Math.PI * 2;    //定义结束角度;
-			    // var grd = ctx.createLinearGradient(0, 0, oBoxOne.width, 0);    //grd定义为描边渐变样式;
-			    // grd.addColorStop(0, 'red');
-			    // grd.addColorStop(0.5, 'yellow');
-			    // grd.addColorStop(1, 'green');
+			    var grd = ctx.createLinearGradient(0, 0, oBoxOne.width, 0);    //grd定义为描边渐变样式;
+			    grd.addColorStop(0, 'red');
+			    grd.addColorStop(0.5, 'yellow');
+			    grd.addColorStop(1, 'green');
 			 
-			    //ctx.textAlign = 'center';    //定义字体居中;
-			    //ctx.fillStyle = '#333333';
-			    //ctx.font = '12px ';
-			    //ctx.fillText("综合评分", sCenter, sCenter-12);
-			    //ctx.font = 'normal normal bold 20px Arial';    //定义字体加粗大小字体样式;
-			    //ctx.fillStyle = options.color == 'grd' ? grd : options.color;    //判断文字填充样式为颜色，还是渐变色;
+			    ctx.textAlign = 'center';    //定义字体居中;
+			     ctx.fillStyle = '#333333';
+			    ctx.font = '12px ';
+			    ctx.fillText("综合评分", sCenter, sCenter-12);
+			    ctx.font = 'normal normal bold 20px Arial';    //定义字体加粗大小字体样式;
+			    ctx.fillStyle = options.color == 'grd' ? grd : options.color;    //判断文字填充样式为颜色，还是渐变色;
 
-			    //ctx.fillText((options.angle * 100) , sCenter, sCenter+12);    //设置填充文字;
+			    ctx.fillText((options.angle * 100) , sCenter, sCenter+12);    //设置填充文字;
 
 
 			    /*ctx.strokeStyle = grd;    //设置描边样式为渐变色;
@@ -833,29 +821,21 @@
 			        ctx.stroke();
 			    }
 			 
-			    var t = 1;
-			    //var timer = null;
+			    var t = 0;
+			    var timer = null;
 			    function loadCanvas(angle) {    //该函数循环绘制指定角度，实现加载动画;
-			        // timer = setInterval(function(){
-			        //     if (t > angle) {
-			        //         draw(options.angle);
-			        //         clearInterval(timer);
-			        //     }else{
-			        //         draw(t);
-			        //         t += 0.02;
-			        //     }
-                    // }, 20);
-                    
-                    if (t > angle) {
+			        timer = setInterval(function(){
+			            if (t > angle) {
 			                draw(options.angle);
-			                //clearInterval(timer);
+			                clearInterval(timer);
 			            }else{
 			                draw(t);
-			                //t =1;
+			                t += 0.02;
 			            }
+			        }, 20);
 			    }
 			    loadCanvas(options.angle);    //载入百度比角度  0-1 范围;
-			    //timer = null;
+			    timer = null;
 			 
 			},
 			seach(){
@@ -931,7 +911,7 @@
 					}
 				})
 				.then((res)=>{
-					//console.log(res)
+					console.log(res)
 					if(res.data.success ==1){
 						this.content = '';
 						this.value1 = 0;
@@ -968,12 +948,11 @@
                     }
                 })
                 .then((res)=>{
-                    //console.log("评分信息")
-                    //console.log(res)
+                    console.log(res)
                     
                     this.info = res.data
                     let angle = this.info.zonghe/100;                   
-					//console.log(angle)
+					console.log(angle)
 					this.drawCircle({
 					    id: 'canvas',
 					    color: '#ffcc33',
@@ -1024,7 +1003,7 @@
     margin-right: 50px;
     position: relative;
 }
-  .middle_top .middle_top_left #smll_box1{
+  .middle_top .middle_top_left #smll_box{
       border:1px #e0e0e0 solid;
         display: block;
         width: 300px;
@@ -1037,7 +1016,7 @@
 		height:100%;
 	}
 }
-  .middle_top .middle_top_left #smll_box1 img{
+  .middle_top .middle_top_left #smll_box img{
     width: 300px;
     height: 300px;
 }
@@ -1072,17 +1051,17 @@
     position: absolute;
    bottom: 16px;
     left: -20px;
-    background: url(../assets/prev_gray.png) no-repeat;
+    background: url(../../static/img/prev_gray.png) no-repeat;
 }
 
   .middle_top .middle_top_left a.next{
     position: absolute;
     bottom: 16px;
     right: -20px;
-    background: url(../assets/next_gray.png) no-repeat;
+    background: url(../../static/img/next_gray.png) no-repeat;
 }
 
-  .middle_top .middle_top_left .pro_list1{
+  .middle_top .middle_top_left .pro_list{
     width: 300px;
     margin: 0 auto;
     text-align: center;
@@ -1091,7 +1070,7 @@
     height: 62px;
     margin-top: 23px;
 }
-  .middle_top .middle_top_left .pro_list1 ul{
+  .middle_top .middle_top_left .pro_list ul{
     // display: inline-block;
     margin-right: -28px;
     padding: 0 20px;
@@ -1102,7 +1081,7 @@
     top:0;
     left:0;
 }
-  .middle_top .middle_top_left .pro_list1 ul li{
+  .middle_top .middle_top_left .pro_list ul li{
     cursor: pointer;
     width: 62px;
     height: 62px;
@@ -1112,17 +1091,17 @@
 }
 
 
-  .middle_top .middle_top_left .pro_list1 ul li.on{
+  .middle_top .middle_top_left .pro_list ul li.on{
     border: 1px solid #ff0000;
     box-sizing: border-box;
     padding: 0;
 }
-  .middle_top .middle_top_left .pro_list1 ul li:hover{
+  .middle_top .middle_top_left .pro_list ul li:hover{
     border: 1px solid #ff0000;
     box-sizing: border-box;
     padding: 0;
 }
-  .middle_top .middle_top_left .pro_list1 ul li  img{
+  .middle_top .middle_top_left .pro_list ul li  img{
     width: 60px;
     height: 60px;
 }
@@ -1148,16 +1127,12 @@
         width: 650px;
         height: 95px;
         border:1px #d9d9d9 solid;
-        margin: 30px 0 20px 0;
+        margin: 30px 0 45px 0;
         padding: 10px 0;
         ul{
             li{
                 width: 50%;
                 line-height: 35px;
-                height: 35px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
                 float: left;
                 padding: 0 10px;
                 box-sizing: border-box;
@@ -1708,7 +1683,6 @@
              line-height: 32px;
              color: #fff;
              text-align: center;
-             cursor: pointer;
         }
             
     }
@@ -2184,7 +2158,7 @@
         }
     }
 }
-.middle_top .middle_top_left #smll_box1 img{
+.middle_top .middle_top_left #smll_box img{
     width: 300px;
     height: 300px;
 }

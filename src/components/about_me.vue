@@ -64,7 +64,8 @@
         font-size:14px;
         line-height:30px;
         color:#666666;
-        margin: 15px 0 30px 0;
+		margin: 15px 0 30px 0;
+		
     }
     
 }

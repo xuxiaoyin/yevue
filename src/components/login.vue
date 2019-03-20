@@ -1,6 +1,6 @@
 <template>
 	<div>
-        <div id="content">
+        <div id="content1">
             <div class="router">
                 <div class="container">
                     <a href="###">首页</a>><a href="###">登录</a>
@@ -161,10 +161,13 @@
     }
 </script>
 <style lang="scss">
-	#content{
-        background: #f2f2f2;
+	#content1{
+        background: #f2f2f2 !important;
         width: 100%;
         height: 700px;
+        .router{
+            padding: 20px 0;
+        }
     }
 
 .login{

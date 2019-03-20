@@ -23,13 +23,13 @@
           <div class="container">
             <div class="common_title">
               <img src="static/img/zhishu.png"/>
-              茶叶指数 <span>index of tde tea</span>
+              茶叶指数 <span>Index of tde tea</span>
               <router-link to="/zhishu">查看更多>></router-link>
               <div class="ca_list">
                 <ul>
-                  <li :class="brand_index== 11?'active':''" @click="change_band(11)">大益指数</li>
-                  <li :class="brand_index== 13?'active':''" @click="change_band(13)">陈升号指数</li>
-                  <li :class="brand_index== 14?'active':''" @click="change_band(14)">中茶指数</li>
+                  <li :class="brand_index== 11?'active':''" @mousemove="change_band(11)">大益指数</li>
+                  <li :class="brand_index== 13?'active':''" @mousemove="change_band(13)">陈升号指数</li>
+                  <li :class="brand_index== 14?'active':''" @mousemove="change_band(14)">中茶指数</li>
                 </ul>
               </div>
             </div>
@@ -38,7 +38,7 @@
                 <li 
                   v-for="(item,index) in zhishu_tab"
                   :key="index"
-                  @click="click_zhishutab(index)"
+                  @mousemove="click_zhishutab(index)"
                   :data-index="index"
                   :class="index==zhishutab_num?'active':''">{{item}}</li>
               </ul>
@@ -587,8 +587,9 @@ export default {
     // 资讯列表
     get_zixunList(){
         var that = this;
-        axios.post('http://cy.gzziyu.com/mobile/pcindex.php?Action=article_cat&id=12')
+        axios.post('http://cy.gzziyu.com/mobile/pcindex.php?Action=article_cat&id=12&shuzi=10')
          .then((res) =>{
+        console.log('咨询')
         console.log(res);
         this.zixun = res.data;
       })
@@ -607,12 +608,12 @@ export default {
 /*banner样式*/
 @import './css/index.scss';
 .swiper-slide{
-    height: 540px;
+    height: 600px;
     overflow: hidden;
 }
 .swiper-slide img{
     min-width: 100%;
-    max-height: 540px;
+    max-height: 600px;
 }
 .zixun_list ul li a{
     float: left;
@@ -631,6 +632,9 @@ export default {
     min-height: 128px;
     float: none;
     margin: 0;
+}
+.zixun_list ul li .detext{
+    height: 60px;
 }
 .tuandui .tuan_list ul li{
     height: 420px;

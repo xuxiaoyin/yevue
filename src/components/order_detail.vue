@@ -9,7 +9,7 @@
             <div class="container">
                 <div class="img"><img :src='"static/img/"+info.zhuangtai+".png"' alt=""></div>
                 <div class="chat">
-                    <div class="chat_title">
+                    <div class="chat_title" v-if="info.order.order_sn">
                         订单编号：<span>{{info.order.order_sn}}</span>
                     </div>
                     <div class="order_info">
@@ -24,7 +24,7 @@
                     </div>
                     <div class="table_order">
                         <ul>
-                            <li>订单编号：<span>{{info.order.order_sn}}</span></li>
+                            <li v-if="info.order.order_sn">订单编号：<span>{{info.order.order_sn}}</span></li>
                             <li>付款方式：<span>{{info.order.pay_name}}</span></li>
                             <li>收货信息：<span>{{info.order.address}}{{info.order.address_name}}</span></li>
                             <li>下单时间：<span>{{info.order.formated_add_time}}</span></li>
@@ -39,7 +39,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="chat">
+                <div class="chat product-info" style="border-bottom:none; margin-bottom:0;">
                     <div class="chat_title">
                         商品信息
                     </div>
@@ -70,18 +70,18 @@
                                 <p class="red">￥{{item.subtotal}}</p>
                             </li>
                         </ul>
-                        <div class="total">
-                            <span class="num">共{{info.goods_list.length}}件商品</span>
+                        <!-- <div class="total">
+                            <span class="num"><span class="red">{{info.goods_list.length}}</span>件商品</span>
                             <span class="total_">商品总金额：</span>
                             <span class="total_price">￥{{info.order.goods_amount}}</span>
-                        </div>
+                        </div> -->
                         
                     </div>
                 </div>
-                <div class="huizong">
+                <div class="huizong total">
                     <p><span>{{info.goods_list.length}}</span>件商品，商品总金额：<span class="price">￥{{info.order.goods_amount}}</span></p>
                     <!-- <p>运费：<span class="price">+￥10 .00</span></p> -->
-                    <p>应付总额：<span class="price">￥{{info.order.goods_amount}}</span></p>
+                    <p>应付总额：<span class="price total_price">￥{{info.order.goods_amount}}</span></p>
                     
                 </div>
             </div>
@@ -103,7 +103,7 @@
                 <ul>
                     <li>
                         <div class="order_title">
-                            <div class="container-m">
+                            <div class="container-m" v-if="info.order.order_sn">
                                 订单编号：{{info.order.order_sn}}
                                 <span>{{info.biaoti}}</span>
                             </div>
@@ -135,7 +135,7 @@
             </div>
 
             <div class="order_other">
-                <p>订单编号 {{info.order.order_sn}}</p>
+                <p v-if="info.order.order_sn">订单编号 {{info.order.order_sn}}</p>
                 <p>创建时间 {{info.order.formated_add_time}}</p>
                 <!-- <p>成交时间 2018-01-24  10:25:54</p> -->
             </div>
@@ -184,6 +184,7 @@
 					}
 				})
 				.then((res)=>{
+                    console.log('订单信息')
 					console.log(res)
 					this.info = res.data
 				})
@@ -207,6 +208,9 @@
     overflow: hidden;
     border:1px #e0e0e0 solid;
     margin-bottom: 30px;
+    .product-info{
+        border-bottom: none;
+    }
     .chat_title{
         background: #F2F2F2;
         height: 40px;
@@ -391,6 +395,7 @@
                 color: #7f7f7f;
                 font-size: 14px;
                 box-sizing:border-box;
+                border: none;
                 &.red{
                     color: #ee0a0d;
                     
@@ -535,7 +540,7 @@
         width: 1177px;
         overflow: hidden;
         margin: 0 auto;
-        border: 1px #e0e0e0 solid;
+        // border: 1px #e0e0e0 solid;
         
         ul{
             width: 100%;
@@ -566,9 +571,11 @@
 
  }
  .huizong{
-     width: 100%;
-     padding-bottom: 15px;
-     border-bottom: 1px #e0e0e0 solid;
+     width: 1202px;
+     box-sizing: border-box;
+     padding: 15px;
+     border: 1px #e0e0e0 solid;
+     border-top: none;
      margin-bottom: 60px;
      p{
          width: 100%;
@@ -579,6 +586,10 @@
          span.price{
              width: 160px;
              display: inline-block;
+         }
+         span.total_price{
+             font-size: 18px;
+             font-weight: bold;
          }
          span{
              color: #ee0a0d;

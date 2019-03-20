@@ -25,8 +25,6 @@ import VueAreaLinkage from 'vue-area-linkage';
 import 'vue-area-linkage/dist/index.css';
 Vue.use(VueAreaLinkage)
 
-import ProductZoomer from 'vue-product-zoomer'
-Vue.use(ProductZoomer)
 
 import Share from 'vue-social-share'
 Vue.use(Share)
@@ -68,7 +66,7 @@ Vue.prototype.changeData = function (){
 		}
 	})
 	.then((res)=>{
-		var len = res.data.goods_list.length;
+		var len = res.data.goods_list?res.data.goods_list.length:0;
 		console.log(res.data)
 		console.log('len',len)
 		store.commit('cart_num',len)

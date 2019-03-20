@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="content">
-        <div class="router">
+        <div class="router1">
           <div class="container">
                 <router-link to="/">首页</router-link>><a href="javascript:void(0)">品牌商城</a>
           </div>
@@ -33,10 +33,10 @@
                             </a>
                             <div class="name">{{item.goods_name}}</div>
                             <div class="price">￥{{item.shop_price}} /件</div>
-                            <div class="status">升跌：
+                            <!-- <div class="status">升跌：
                                 <span 
                                     :class="item.zhishuji"
-                                >{{item.sjshuzhi}}</span></div>
+                                >{{item.sjshuzhi}}</span></div> -->
                         </li>
                         
                     </ul>
@@ -57,8 +57,8 @@
                     <a href="javascript:void(0)">
                       <img :src="item.goods_img"/>
                     </a>
-                    <div class="name">{{item.goods_name}}</div>
-                    <div class="price">￥{{item.shop_price}} /件</div>
+                    <div class="name1">{{item.goods_name}}</div>
+                    <div class="price1">￥{{item.shop_price}} /件</div>
                     <!-- <div class="status">升跌：<span class="green">升￥200  ↑  1.80%</span></div> -->
                   </li>
                   
@@ -409,6 +409,7 @@
                     }
                 })
                 .then((res)=>{
+                    console.log('品牌信息')
                     console.log(res)
                     this.lists = res.data
                 })
@@ -453,11 +454,12 @@
 }
 #content{
     overflow: hidden;
-    .router{
+    .router1{
         font-size:14px;
         line-height:30px;
         color:#666666;
-        margin: 15px 0 30px 0;
+        padding: 15px 0 30px 0;
+        background: #f2f2f2;
     }
     
 }
@@ -672,7 +674,7 @@
                         width: 100%;
                         
                     }
-                    .name{
+                    .name1{
                         line-height: 40px;
                         font-size: 16px;
                         color: #333333;
@@ -680,17 +682,19 @@
                          width: 100%;
                         padding: 0 5px;
                         box-sizing: border-box;
+                        text-align: center;
                          overflow: hidden;
                         text-overflow: ellipsis;
                         display: -webkit-box;
                         -webkit-line-clamp: 1;
                         -webkit-box-orient: vertical;
                     }
-                    .price{
+                    .price1{
                         color: #ee0a0d;
                         line-height: 40px;
                         margin-bottom: 10px;
                         font-size: 18px;
+                        text-align: center;
                         width: 100%;
                         padding: 0 5px;
                         box-sizing: border-box;

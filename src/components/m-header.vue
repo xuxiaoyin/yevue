@@ -7,11 +7,11 @@
             <div class="top_right_common">您好，欢迎来到品牌普洱报价网</div>
               <ul class="">
                 <li><router-link to="/user/order?id=0">我的订单</router-link></li>
-                <li><router-link to="user/user_info">个人中心</router-link></li>
+                <li><router-link :to="{path:'/user/order',query:{id:0}}">个人中心</router-link></li>
                 <li v-if="Infos">欢迎你，{{Infos.user_name}}</li>
                 <li v-if="Infos" @click="un_login">退出登录</li>
-                <li v-if="!Infos"><router-link to="/login?id=0"><img src="static/img/zhuce.png"/>注册</router-link></li>
-                <li v-if="!Infos"><router-link to="/login?id=1"><img src="static/img/login.png"/>登录</router-link></li>
+                <li v-if="!Infos"><router-link to="/login?id=0" class="login-btn"><img src="static/img/zhuce.png"/><span>注册</span></router-link></li>
+                <li v-if="!Infos"><router-link to="/login?id=1" class="login-btn"><img src="static/img/login.png"/><span>登录</span></router-link></li>
               </ul>
             </div>
           </div>
@@ -34,7 +34,7 @@
                       v-model="kewords" placeholder="请输入搜索关键字" 
                       @focus="focue"
                       value="" ref="searchInput"/>
-                    <ul class="select-options" v-show="isBulur">
+                    <ul class="select-options" v-show="isBulur" style="z-index:9999;">
                       <li 
                         v-for="(item,index) in isfenlei?options5:options6"
                         :key="index"
@@ -44,6 +44,7 @@
                           <span class="price">￥{{item.label}}</span>
                       </li>
                     </ul>
+                    <div style="position: fixed; top: 0px; bottom: 0px; left: 0px; right: 0px; z-index:8888;" v-show="isBulur" @click="isBulur=false"></div>
                     <!-- <el-select
                       class="el-select"
                       v-model="value10"
@@ -89,7 +90,7 @@
                     @mouseover="showsublist(item)"
                     @mouseout="hidesublist"><a href="javascript:void(0);">{{item.name}}</a>
 
-                    <ul class="sublist" v-if="item.name==='咨询频道' && showsub" @mouseover="showsub=true">
+                    <ul class="sublist" v-show="item.name==='咨询频道' && showsub" @mouseover="showsub=true">
                         <li 
                           v-for="(subnav,index1) in subnav_list"  
                           :key="index1"
@@ -379,7 +380,7 @@ export default {
             for(var i=0; i<res.data.length;i++){
                 var _obj={
                     value: res.data[i].goods_name,
-                    label: res.data[i].shop_price+'/'+res.data[i].seller_note
+                    label: res.data[i].cenkaojia+'/'+res.data[i].seller_note
                 }
               this.options6.push(_obj)
             }
@@ -402,7 +403,7 @@ export default {
             for(var i=0; i<res.data.length;i++){
                 var _obj1={
                     value: res.data[i].goods_name,
-                    label:res.data[i].shop_price+'/'+res.data[i].seller_note
+                    label:res.data[i].cenkaojia+'/'+res.data[i].seller_note
                 }
               this.options5.push(_obj1)
             }
@@ -422,6 +423,18 @@ export default {
   // color: #fff;
   font-size: 12px;
   line-height:30px;
+}
+.login-btn{
+    font-size: 0;
+}
+.login-btn span{
+    font-size: 12px;
+    display: inline-block;
+}
+.login-btn img{
+    margin-top: 4px;
+    vertical-align: top;
+    padding-top: 3px;
 }
 #header{
   width: 100%;
@@ -595,20 +608,21 @@ export default {
            float: left;
            font-size: 14px;
            color: #666666;
-           margin-top: 36px;
-           margin-left: 7px;
+           margin-top: 23px;
+           margin-left: 46px;
+           line-height: 38px;
            span{
                color: #999999;
            }
        }
        .cart{
            width: 170px;
-           height: 40px;
+           height: 38px;
            border:1px solid #d9d9d9;
            float: right;
-           margin-top: 28px;
+           margin-top: 18px;
            color: #000000;
-           line-height: 40px;
+           line-height: 38px;
              text-align: center;
            span{
                color: #EE0A0D;
@@ -648,7 +662,7 @@ export default {
                }
                .sublist{
                  position: absolute;
-                 bottom: -68px;
+                 top: 34px;
                  left: 0;
                  right: 0;
                  z-index: 999;
@@ -701,7 +715,7 @@ export default {
                 right: 50px;
                 top: 0;
                 min-width:200px;
-                line-height: 50px;
+                line-height: 60px;
                 text-align: center;
                 display: none;
                 border-top-left-radius:5px;

@@ -3,7 +3,7 @@
         <div id="content">
             <div class="router">
                 <div class="container">
-                   <router-link to="/">首页</router-link>><a href="javascript:void(0)">行情</a>
+                   <router-link to="/">首页</router-link>><a href="javascript:void(0)">行情参考</a>
                 </div>
             </div>
             <div class="container">
@@ -31,7 +31,7 @@
                                 <ul>
                                     <li v-for="(item,index) in wenda_list" :key="index">
                                         <div class="nav_title"><span>？</span>{{item.msg_title}}</div>
-                                        <div class="p">{{item.msg_content}}</div>
+                                        <div class="p1">{{item.msg_content}}</div>
                                     </li>
                                    
                                     <li><router-link to="/wenda">查看更多</router-link></li>
@@ -65,7 +65,7 @@
                                 <li :class="paidui_index == 3?'on':''" @click="change_paidui(3)">↓价格升降</li>
                             </ul>
                         </div>
-                        <div class="product_list">
+                        <div class="product_list1">
                             <ul>
                                 <li v-for="(item,index) in lists" :key="index" @click="go_detail(item.goods_id)">
                                     <a href="javascrpt:void(0)">
@@ -77,6 +77,7 @@
                                         <span 
                                             :class="item.zhishuji"
                                         >{{item.sjshuzhi}}</span></div>
+                                    <div class="pls" style="text-align:left; color:#120ddc; line-height:30px; padding:0 5px;">{{item.pinglunshu}}人评分</div>
                                 </li>
                                 
                             </ul>
@@ -179,7 +180,7 @@
         watch: {
               $route(to){
                 this.pjtid = this.$route.query.id
-                console.log('pjtid'+this.pjtid)
+                //console.log('pjtid'+this.pjtid)
                 if(to.path == '/hangqing'){
                     if(this.$route.query.keyword){
                         this.seach(this.$route.query.keyword)
@@ -194,7 +195,7 @@
         },
         methods:{
             handleSizeChange(val) {
-                console.log(`每页 ${val} 条`);
+                //console.log(`每页 ${val} 条`);
             },
              handleCurrentChange(val) {
                 var that = this;
@@ -222,10 +223,10 @@
                 this.paidui_index = index;
                 var brand;
                 this.attr[0].attr_list.map((res)=>{
-                    console.log("默认"+res)
+                    //console.log("默认"+res)
                     if(res.active){
                         brand = res.attr_id;
-                        console.log('brand'+brand)
+                        //console.log('brand'+brand)
                     }
                 })
                 switch(index){
@@ -384,6 +385,7 @@
                     }
                 })
                 .then((res)=>{
+                    //console.log('行情列表')
                     //console.log(res)
                     
                     this.lists = res.data
@@ -434,7 +436,7 @@
                 this.$axios({
                     url:'https://cy.gzziyu.com/mobile/ziyu.php?Action=wentifankuilist',
                     params:{
-                        shuzi:2
+                        shuzi:5
                     },
                     method:'post'
                 })
@@ -544,11 +546,12 @@
                             }
                             
                         }
-                        .p{
+                        .p1{
                                 font-size: 12px;
                                 width: 100%;
                                 color: #999999;
                                 line-height: 20px;
+                                height: 60px;
                                 padding:0 15px;
                                 box-sizing: border-box;
                                 margin-bottom: 10px;
@@ -597,7 +600,7 @@
                     }
                     .name{
                         line-height: 30px;
-                        font-size: 16px;
+                        font-size: 14px;
                         color: #333333;
                         border-top:1px #e0e0e0 solid;
                          width: 100%;
@@ -615,6 +618,8 @@
                         width: 100%;
                         padding: 0 5px;
                         box-sizing: border-box;
+                        font-size: 16px;
+                        font-weight: bold;
                     }
                     .status{
                         font-size: 12px;
@@ -659,7 +664,7 @@
                 }
             }
         }
-        .product_list{
+        .product_list1{
             width: 100%;
             margin-top: 20px;
             text-align: center;
@@ -667,7 +672,7 @@
                 width: 100%;
                 li{
                     width: 218px;
-                    height: 330px;
+                    height: 360px;
                     border:1px #e0e0e0 solid;
                     margin: 0 25px 25px 0;
                     float: left;
@@ -676,6 +681,7 @@
                         
                     }
                     .name{
+                        height: 40px;;
                         line-height: 40px;
                         font-size: 16px;
                         color: #333333;
@@ -685,6 +691,7 @@
                         box-sizing: border-box;
                          overflow: hidden;
                         text-overflow: ellipsis;
+                        white-space: nowrap;
                         display: -webkit-box;
                         -webkit-line-clamp: 1;
                         -webkit-box-orient: vertical;
@@ -697,6 +704,7 @@
                         width: 100%;
                         padding: 0 5px;
                         box-sizing: border-box;
+                        text-align: left;
                     }
                     .status{
                         font-size: 12px;
@@ -704,6 +712,7 @@
                          width: 100%;
                         padding: 0 5px;
                         box-sizing: border-box;
+                        text-align: left;
                         span.red{
                             color: #ee0a0d;
                         }

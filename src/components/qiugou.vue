@@ -3,7 +3,7 @@
         <div id="content">
             <div class="router">
                 <div class="container">
-                    <router-link to="/">首页</router-link>><a href="javascript:void(0)">求购</a>
+                    <router-link to="/">首页</router-link>><a href="javascript:void(0)">求购信息</a>
                 </div>
             </div>
             <!--弹出层-->
@@ -430,12 +430,12 @@
             submit_qiugou(type){
                 var userInfo = JSON.parse(sessionStorage.getItem('userInfos'));
                 console.log(this)
-                if(this.price == ""){
-                    alert('请输入价格')
-                     return false
-                }
+                // if(this.price == ""){
+                //     alert('请输入价格')
+                //      return false
+                // }
                 if(this.productname == ""){
-                    alert('请输入价格')
+                    alert('请输入产品名称')
                      return false
                 }
                 if(this.years == ""){
@@ -451,7 +451,7 @@
                      return false
                 }
                  if(this.name == ""){
-                    alert('请输入商品名称')
+                    alert('请输姓名')
                      return false
                 }
                  if(this.mobile == ""){
@@ -462,18 +462,18 @@
                     alert('请输入微信')
                      return false
                 }
-                  if(this.qq == ""){
-                    alert('请输入qq')
-                     return false
-                }
-                  if(this.chushou == ""){
-                    alert('请填写出售信息')
-                     return false
-                }
-                  if(this.zuanjia == ""){
-                    alert('请选择专家')
-                    return false
-                }
+                //   if(this.qq == ""){
+                //     alert('请输入qq')
+                //      return false
+                // }
+                //   if(this.chushou == ""){
+                //     alert('请填写出售信息')
+                //      return false
+                // }
+                //   if(this.zuanjia == ""){
+                //     alert('请选择专家')
+                //     return false
+                // }
                 this.$axios({
                     url:"https://cy.gzziyu.com/mobile/purchase.php?Action=baocunqiugou",
                     method:'post',

@@ -3,7 +3,9 @@
 		<div id="content">
 			<div class="router">
 				<div class="container">
-					<router-link to="/">首页</router-link>><a href="javascript:void(0)">问答详情</a>
+					<router-link to="/">首页</router-link>>
+                    <router-link to="/wenda">益问益答</router-link>>
+                    <a href="javascript:void(0)">问答详情</a>
 				</div>
 			</div>
 			<div class="container">

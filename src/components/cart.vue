@@ -8,7 +8,7 @@
 			</div>
 			<div class="container">
 				<div class="cart_title">
-					共 23 件商品
+					共 {{allNum}} 件商品
 				</div>
 				<div class="cart_list">
 					<div class="cart_head">
@@ -58,9 +58,9 @@
 							全选
 						</div>
 						<div class="common_cart pro_info" @click="dele_check"><p>删除选中商品</p></div>
-						<div class="common_cart all_num"><p>已选择1件商品</p></div>
+						<div class="common_cart all_num"><p>已选择{{allSelect}}件商品</p></div>
 						<div class="common_cart total"><p>合计：<span>￥{{allMoney}}</span></p></div>
-						<div class="common_cart sumbit" @click="clearing">提交订单</div>
+						<div class="common_cart sumbit" @click="clearing">去结算</div>
 					</div>
 				</div>
 			</div>
@@ -112,9 +112,10 @@
 		data(){
 			return {
 				lists:[],
-				allMoney:'',
 				allState:false,
-				allMoney:0
+				allMoney:0,
+				allNum:0,
+				allSelect:0
 			}
 		},
 		created(){
@@ -150,12 +151,24 @@
 					}
 				})
 				.then((res)=>{
+					console.log('购物车')
 					console.log(res)
-					res.data.goods_list.map((e)=>{
-						e.radio = false
-					})
-					this.lists = res.data.goods_list
-					this.allState = false
+					if(res.data.goods_list){
+						if(res.data.total.total_number){
+						this.allNum=res.data.total.total_number	
+						this.$store.commit('cart_num',res.data.goods_list.length)
+						}
+						res.data.goods_list.map((e)=>{
+							e.radio = false
+						})
+						this.lists = res.data.goods_list
+						this.allState = false
+					}
+					else{
+						this.allNum=0;
+						this.lists=[];
+							this.$store.commit('cart_num',0)
+					}
 				})
 			},
 			// 减法
@@ -175,6 +188,7 @@
 			             
 			            })
 			            .then((res)=>{
+										console.log("减法")
 			            	console.log(res)
 			            	this.get_list()
 			    			this.calcMoney()
@@ -324,14 +338,17 @@
 			  	}
 		    },
 		    calcMoney () {
-			    let num = 0
+					let num = 0
+					let number=0
 			    this.lists.map((item, i) => {
 			      if (item.radio) {
-			        num += parseInt(item.goods_price) * parseInt(item.goods_number)
+							num += parseInt(item.goods_price) * parseInt(item.goods_number)
+							number++
 			      }
 			    })
 			    num = this.toDecimal2(num);
-			    this.allMoney = num
+					this.allMoney = num
+					this.allSelect=number
 			  },
 			// 数字格式化
 			toDecimal2(x) {
@@ -362,8 +379,7 @@
 
 			    sendData = sendData.filter((item, i) => {
 			      return item.radio
-			    })
-			    
+					})
 
 			    if (!sendData.length) {
 			      alert('请选择商品')

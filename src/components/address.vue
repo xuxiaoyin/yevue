@@ -25,7 +25,7 @@
 			</div> -->
 			<div class="item">
 				<div class="label">配送区域：</div>
-				<div class="select_div"  v-if="bool">
+				<div class="select_div"  v-if="bool" style="line-height:18px;">
 					<area-cascader type="text" :level='lev' v-model="selected" :data="pcaa"></area-cascader>
 				</div>
 			</div>
@@ -341,9 +341,7 @@
 </script>
 <style lang="scss"  scoped>
 
-.area-select .area-selected-trigger{
-	padding:0;
-}
+
 .contant_right{
     width: 1050px;
     float: left;
@@ -496,8 +494,9 @@
     }
 }
 .area-select .area-selected-trigger{
-	    padding: 0 20px 7px 12px;
+	    padding: 0 20px 0 12px;
 }
+
 	button.user_info{
     width: 81px !important;
     height: 40px;

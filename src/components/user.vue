@@ -3,8 +3,19 @@
          <div id="content">
             <div class="router">
                 <div class="container">
-                     <router-link to="/">首页</router-link>><a href="javascript:void(0)">个人中心</a>
-                    
+                     <router-link to="/">首页</router-link>>
+                     <router-link to="/user/user_info">个人中心</router-link>>
+                     <router-link to="/" v-if="num>0&&num<6">我的订单></router-link>
+                     <router-link to="/" v-if="num>5&&num<10">个人信息></router-link>
+                    <router-link :to="{path:'/user/order',query:{id:0}}" v-if="num==1">所有订单</router-link>
+                    <router-link :to="{path:'/user/order',query:{id:1}}" v-if="num==2">待付款</router-link>
+                    <router-link :to="{path:'/user/order',query:{id:2}}" v-if="num==3">待发货</router-link>
+                    <router-link :to="{path:'/user/order',query:{id:3}}" v-if="num==4">待收货</router-link>
+                    <router-link :to="{path:'/user/order',query:{id:4}}" v-if="num==5">待评价</router-link>
+                    <router-link to="/user/user_info" v-if="num==6">个人资料</router-link>
+                    <router-link to="/user/address" v-if="num==7">收货地址</router-link>
+                    <router-link to="/user/change_password" v-if="num==8">修改密码</router-link>
+                    <router-link to="/user/phone_bind" v-if="num==9">绑定手机号</router-link>
                 </div>
                 
             </div>
@@ -91,7 +102,7 @@
         name:'user',
         data(){
             return {
-                num : 0
+                num : 6
             }
         },
         methods:{
@@ -144,7 +155,8 @@
 	                    line-height: 42px;
 	                    text-align: center;
 	                    font-size: 14px;
-	                    color: #1a1a1a;
+                        color: #000;
+                        font-weight: bold;
 	                    margin: 0;
 	                }
 	                dd{

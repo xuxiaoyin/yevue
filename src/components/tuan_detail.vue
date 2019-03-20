@@ -12,10 +12,12 @@
 					<img :src="'https://cy.gzziyu.com/'+info.file_url"/>
 				</div>
 				<div class="detail_info">
-					<p class="name">{{info.title}}</p>
-					<p class="phone">手机号码：{{info.mobile}}</p>
-					<p class="phone">微信号：{{info.wechat}}</p>
-                    <p class="phone">服务品牌：{{info.author_email}}</p>
+                    <p class="name">{{info.title}}</p>
+                    <div class="top">
+                        <p class="phone">手机号码：{{info.mobile}}</p>
+                        <p class="phone">微信号：{{info.wechat}}</p>
+                        <p class="phone">服务品牌：{{info.author_email}}</p>
+                    </div>
                     <div class="contant">
 						<h4 class="contant_title">经纪人简介：</h4>
 						<div v-html="info.content"></div>
@@ -121,6 +123,13 @@
         float: left;
         width: 700px;
         margin-left: 22px;
+        .top{
+            height: 40px;
+            p{
+                float: left;
+                margin-right: 20px;
+            }
+        }
         .name{
             color: #000000;
             font-size: 18px;

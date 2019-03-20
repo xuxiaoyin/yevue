@@ -116,7 +116,7 @@
 			      })
 			      .then((res) =>{
 			        console.log("咨询频道")
-			        console.log(res);
+                    console.log(res);
 			    	this.zixun_list = res.data
 			      })
 			      .catch((err) =>{
@@ -204,8 +204,9 @@
                 float: left;
             }
             .detext{
-                 width: 354px;
+                width: 354px;
                 float: left;
+                height: 60px;
                 line-height: 30px;
                 color: #999999;
                 font-size: 12px;

@@ -14,20 +14,32 @@
 					<div class="middle_top_left" id="demo" v-if="info.gallery">
 						<div id="smll_box1" style="width:300px; height:300px; padding:10px;" class="pic-box" ref="smallbox">
                             <pic-zoom :url="info.gallery[pic_index]" :scale="3" style="position:relative; width:300px; height:300px; left:0; top:0" ></pic-zoom>
-							<!-- <img :src="info.gallery[pic_index]"/>
-                            <div id="float-box"></div> -->
 						</div>
-                        <!-- <div id="big-box" style="position:absolute; width:300px; height:300px; border:1px solid red; top:0; left:310px; overflow:hidden; background:#fff; z-index:99999; display:none;">
-                            <img :src="info.gallery[pic_index]" style="width:600px; height:600px; position: absolute;"/>
-                        </div> -->
-						<div class="pro_list1">
-							 <ul :style="'width:'+(62*info.gallery.length)+'px'" ref="smallimg">
-							 	<li v-for="(item,index) in info.gallery" :key="index+info.goods_id" @click="pic_index=index"><img :src="item"></li>
-							 </ul>
-						</div>
-						<a class="prev" @click="toprev"></a>
-						<a class="next" @click="tonext"></a>
+
+                        <div class="gallery">
+                            <div class="product-img">
+                                <div @click="prevImg" class="prev-arrow" :class="{'prev-active': info.gallery.length - 3 <= 0 || this.offsetCount < 1}">
+                                    <img src="../assets/prev_gray.png" alt="左箭头">
+                                </div>
+                                <ul>
+                                    <li class="list-img">
+                                        <div class="list-img-wrap" ref="carouser">
+                                            <div @click="pic_index=index" v-for="(item,index) in info.gallery" :key="index" class="single-img" :class="{'img-activce': pic_index == index}">
+                                                <img :src="item" alt="缩略图">
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                    <div @click="nextImg" class="next-arrow" :class="{'next-active': info.gallery.length - 3 <= 0 || offsetCount >= info.gallery.length - 3 }">
+                                        <img src="../assets/next_gray.png" alt="右箭头">
+                                </div>
+                            </div>
+                        </div>
+
 					</div>
+
+                    
+
 
 					<div class="middle_top_right">
 							<div class="right_top" v-if="guanggaowei&&guanggaowei.ad_code">
@@ -622,7 +634,8 @@
                 // wechatQrcodeHelper  : '<p>微信里点“发现”，扫一下</p><p>二维码便可将本文分享至朋友圈。</p>'
             },
             pic_index:0,
-            showShare:false
+            showShare:false,
+            offsetCount: 0
 		}
         },
         computed: {
@@ -668,6 +681,31 @@
 	        }
 	    },
 		methods:{
+            prevImg () {
+                if (this.info.gallery.length - 3 > 0) {
+                    if (this.offsetCount > 0) {
+                        this.offsetCount --;					
+                        this.$refs.carouser.style.left = '-' + (84 * this.offsetCount) + 'px';					
+                    } else {
+                        return false
+                    }			
+                } else {
+                    return false				
+                }
+            },
+            nextImg () {
+                if (this.info.gallery.length - 3 > 0) {
+                    if (this.offsetCount < this.info.gallery.length - 3) {
+                        this.offsetCount ++;					
+                        this.$refs.carouser.style.left = '-' + (84 * this.offsetCount) + 'px';					
+                    } else {
+                        return false
+                    }			
+                } else {
+                    return false				
+                }
+            },
+
             toprev(){
                 let left=this.$refs.smallimg.offsetLeft;
                 if(left<=0){
@@ -995,7 +1033,56 @@
 	}
 </script>
 <style lang="scss" scoped>
-	  .middle_top{
+.product-img {
+	display: flex;
+    margin-top: 20px;
+	justify-content: flex-start;
+	justify-content: space-between;
+    align-items: center;
+	.prev-arrow,
+	.next-arrow{
+		cursor: pointer;		
+	}
+	.prev-active,
+	.next-active{
+		cursor: not-allowed;
+	}
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		justify-content: space-between;
+		.list-img {
+			width: 254px;
+			height: 64px;
+			position: relative;  //最外层的宽度，父级定位
+			overflow: hidden;						
+			.list-img-wrap {
+				position: absolute; //子级定位，dom操作偏移
+				left: 0;
+				top: 0;
+                transition: all 0.5s;
+				.single-img {
+				    cursor: pointer;
+					float: left;								
+					width: 62px;
+					height: 62px;
+					margin: 0 10px;							
+					border: 1px solid #E5E5E5;
+                    img{
+                        width: 62px;
+					    height: 62px;
+                    }	
+				}
+				.img-activce{
+					border: 1px solid #C12022;
+				}
+			}
+		}
+	}
+}
+.middle_top{
     padding-top: 50px;
 //  overflow: hidden;
     overflow: '';

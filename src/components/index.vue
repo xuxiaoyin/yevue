@@ -465,7 +465,7 @@ export default {
     },
     watch: {
             $route(to) {
-                console.log(this.$router)
+                //console.log(this.$router)
                  document.body.scrollTop = 0
                 document.documentElement.scrollTop = 0
             }
@@ -475,7 +475,7 @@ export default {
       this.$router.push({name:'zixun_detail',query:{id:id}})  
     },
     go_zhishu(id){
-        console.log('zhishu')
+        //consoleconsole.log('zhishu')
         this.$router.push({name:'hangqing_detail',query:{id:id}})  
     },
     go_tuandui(id){
@@ -498,7 +498,7 @@ export default {
         }
         })
         .then((res)=>{
-        console.log(res)
+        //consoleconsole.log(res)
         this.zhishu = res.data
         })
     },
@@ -508,7 +508,7 @@ export default {
       var that = this;
       axios.post(that.GLOBAL.url+`pcindex.php?Action=chayezhishu&shuzi=${index}&brand_id=${this.brand_index}`)
       .then((res) =>{
-        console.log(res);
+        //console.log(res);
         this.zhishu = [];
         res.data.map((item)=>{
             this.zhishu.push(item)
@@ -525,7 +525,7 @@ export default {
       axios.post(that.GLOBAL.url+'pcindex.php?Action=touch_ad')
       .then((res) =>{
         console.log('轮播')
-        console.log(res.data);
+        //console.log(res.data);
         this.listImg = res.data
       })
       .catch((err) =>{
@@ -538,7 +538,7 @@ export default {
       var that = this;
       axios.post(that.GLOBAL.url+'pcindex.php?Action=chayezhishu&shuzi=&brand_id=11')
       .then((res) =>{
-        console.log(res);
+        //console.log(res);
         this.zhishu = res.data
       })
       .catch((err) =>{
@@ -548,15 +548,15 @@ export default {
     // 行情列表
     gethangqingsList(){
       var that = this;
-      console.log(12333333333)
+     // console.log(12333333333)
       axios.post(that.GLOBAL.url+'pcindex.php?Action=xinpinhangqing&id=20')
       .then((res) =>{
-        console.log("行情")
-        console.log(res);
+       // console.log("行情")
+        //console.log(res);
         this.hangqing = res.data
       })
       .catch((err) =>{
-        console.log("行情错误")
+        //console.log("行情错误")
         console.log(err);
       });
     },
@@ -577,7 +577,7 @@ export default {
       var that = this;
       axios.post('http://cy.gzziyu.com/mobile/pcindex.php?Action=article_cat&id=26')
       .then((res) =>{
-        console.log(res);
+       // console.log(res);
         this.pinpai = res.data;
       })
       .catch((err) =>{
@@ -589,8 +589,8 @@ export default {
         var that = this;
         axios.post('http://cy.gzziyu.com/mobile/pcindex.php?Action=article_cat&id=12&shuzi=10')
          .then((res) =>{
-        console.log('咨询')
-        console.log(res);
+        //console.log('咨询')
+        //console.log(res);
         this.zixun = res.data;
       })
       .catch((err) =>{

@@ -168,17 +168,17 @@
                 }
               },
               pjtid() {
-                console.log(this.$route.query.id)
+                //console.log(this.$route.query.id)
                 this.change_attr(0,this.$route.query.id,this.$route.query.attrs_id)
               },
         },
 		methods:{
              handleSizeChange(val) {
-                console.log(`每页 ${val} 条`);
+                //console.log(`每页 ${val} 条`);
             },
              handleCurrentChange(val) {
                 var that = this;
-                console.log(`当前页: ${val}`);
+               // console.log(`当前页: ${val}`);
                 this.get_list(val)
                 
                 
@@ -191,8 +191,8 @@
                    method:'post'
                 })
                 .then((res)=>{
-                    console.log('浏览记录')
-                    console.log(res)
+                   // console.log('浏览记录')
+                    //console.log(res)
                     this.youlanjilv = res.data
                 })
             },
@@ -206,7 +206,7 @@
                     }
                 })
                 .then((res)=>{
-                    console.log(res)
+                   // console.log(res)
                     this.lists = res.data
                 })
             },
@@ -239,14 +239,14 @@
                         }
                     })
                     .then((res)=>{
-                        console.log(res)
+                       // console.log(res)
                         
                         this.$axios({
                             url:'http://cy.gzziyu.com/mobile/'+res.data,
                             method:'post',
                         })
                         .then((ress)=>{
-                            console.log(ress)
+                           // console.log(ress)
                             
                             this.lists = ress.data
                         })
@@ -264,7 +264,7 @@
                         }
                     })
                     .then((res)=>{
-                        console.log(res)
+                        //console.log(res)
                         
                          this.$axios({
                             url:'http://cy.gzziyu.com/mobile/'+res.data,
@@ -277,7 +277,7 @@
                         })
                     })
                     .catch((err)=>{
-                        console.log(err)
+                       // console.log(err)
                     })
                     break;
                 case 3:
@@ -289,7 +289,7 @@
                         }
                     })
                     .then((res)=>{
-                        console.log(res)
+                        //console.log(res)
                         
                          this.$axios({
                             url:'http://cy.gzziyu.com/mobile/'+res.data,

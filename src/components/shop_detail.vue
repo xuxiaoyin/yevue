@@ -17,13 +17,27 @@
                             <div id="box1"></div>
                         </div>
                         <div id="box"></div>
-                        <div class="pro_list">
-                            <ul>
-                                <li v-for="(item,index) in info.gallery" :key="index" @click="pic_index=index"><img :src="item"></li>
-                             </ul>
+
+                        <div class="gallery">
+                            <div class="product-img">
+                                <div @click="prevImg" class="prev-arrow" :class="{'prev-active': info.gallery.length - 3 <= 0 || this.offsetCount < 1}">
+                                    <img src="../assets/prev_gray.png" alt="左箭头">
+                                </div>
+                                <ul>
+                                    <li class="list-img">
+                                        <div class="list-img-wrap" ref="carouser">
+                                            <div @click="pic_index=index" v-for="(item,index) in info.gallery" :key="index" class="single-img" :class="{'img-activce': pic_index == index}">
+                                                <img :src="item" alt="缩略图">
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                    <div @click="nextImg" class="next-arrow" :class="{'next-active': info.gallery.length - 3 <= 0 || offsetCount >= info.gallery.length - 3 }">
+                                        <img src="../assets/next_gray.png" alt="右箭头">
+                                </div>
+                            </div>
                         </div>
-                        <a class="prev"></a>
-                        <a class="next"></a>
+
                     </div>
                     <div class="middle_top_right">
                             <!-- <div class="right_top" v-if="guanggaowei.ad_code">
@@ -317,7 +331,9 @@
                 pic_index:0,
                 showShare:false,
                 isGuanzhu:false,
-                pic_index:0
+                pic_index:0,
+                offsetCount: 0,
+                isGz:false
 			}
 		},
 		created(){
@@ -339,6 +355,30 @@
 	        }
 	    },
 		methods:{
+             prevImg () {
+                if (this.info.gallery.length - 3 > 0) {
+                    if (this.offsetCount > 0) {
+                        this.offsetCount --;					
+                        this.$refs.carouser.style.left = '-' + (84 * this.offsetCount) + 'px';					
+                    } else {
+                        return false
+                    }			
+                } else {
+                    return false				
+                }
+            },
+            nextImg () {
+                if (this.info.gallery.length - 3 > 0) {
+                    if (this.offsetCount < this.info.gallery.length - 3) {
+                        this.offsetCount ++;					
+                        this.$refs.carouser.style.left = '-' + (84 * this.offsetCount) + 'px';					
+                    } else {
+                        return false
+                    }			
+                } else {
+                    return false				
+                }
+            },
             //关注
             guanzhu(info_id){
                 if (!sessionStorage.getItem('userInfos')) {
@@ -372,7 +412,7 @@
             
             // 广告
             guanggao(){
-                console.log('guanggao')
+                //console.log('guanggao')
                 this.$axios({
                     url:'https://cy.gzziyu.com/mobile/pcindex.php?Action=danzhang',
                     method:'post',
@@ -381,7 +421,7 @@
                     }
                 })
                 .then((res)=>{
-                    console.log('广告位,',res)
+                    //console.log('广告位,',res)
                     this.guanggaowei = res.data[0]
                 })
             },
@@ -403,13 +443,13 @@
                     }
                 })
                 .then((res)=>{
-                    console.log(res)
+                    //console.log(res)
                     if(res.data.msg == "success"){
                        this.$router.push('cart')
                     }
                 })
                 .catch((err)=>{
-                    console.log(err)
+                    //console.log(err)
                 })
             },
 			add_cart(){
@@ -430,7 +470,7 @@
 					}
 				})
 				.then((res)=>{
-					console.log(res)
+					//console.log(res)
                     if(res.data.msg == "success"){
                         alert('加入购物车成功')
                         this.num = 1;
@@ -479,7 +519,7 @@
 					}
 				})
 				.then((res)=>{
-					console.log(res)
+					//console.log(res)
 					if(res.data.success ==1){
 						this.content = '';
 						this.value1 = 0;
@@ -498,8 +538,8 @@
 					}
 				})
 				.then((res)=>{
-                    console.log('商品详情')
-					console.log(res)
+                    //console.log('商品详情')
+					//console.log(res)
 					this.info = res.data
 				})
 			},
@@ -526,7 +566,56 @@
 
 
 <style lang="scss">
-	  .middle_top{
+.product-img {
+	display: flex;
+    margin-top: 20px;
+	justify-content: flex-start;
+	justify-content: space-between;
+    align-items: center;
+	.prev-arrow,
+	.next-arrow{
+		cursor: pointer;		
+	}
+	.prev-active,
+	.next-active{
+		cursor: not-allowed;
+	}
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		justify-content: space-between;
+		.list-img {
+			width: 360px;
+			height: 64px;
+			position: relative;  //最外层的宽度，父级定位
+			overflow: hidden;						
+			.list-img-wrap {
+				position: absolute; //子级定位，dom操作偏移
+				left: 0;
+				top: 0;
+                transition: all 0.5s;
+				.single-img {
+				    cursor: pointer;
+					float: left;								
+					width: 62px;
+					height: 62px;
+					margin: 0 10px;							
+					border: 1px solid #E5E5E5;
+                    img{
+                        width: 62px;
+					    height: 62px;
+                    }	
+				}
+				.img-activce{
+					border: 1px solid #C12022;
+				}
+			}
+		}
+	}
+}
+.middle_top{
     padding-top: 50px;
 //  overflow: hidden;
 }
